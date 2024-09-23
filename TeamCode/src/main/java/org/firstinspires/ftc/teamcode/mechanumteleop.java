@@ -1,4 +1,4 @@
-//copy pasted from https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html
+//copy pasted from https://gm0.org/en/latest/docs/software/tutoria+ls/mecanum-drive.html
 
 package org.firstinspires.ftc.teamcode;
 
@@ -22,8 +22,8 @@ public class mechanumteleop extends LinearOpMode {
         // If your robot moves backwards when commanded to go forwards,
         // reverse the left side instead.
         // See the note about this earlier on this page.
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
