@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
-public class mechanumteleop extends LinearOpMode {
+public class mechanumteleopnormal extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Declare our motors
