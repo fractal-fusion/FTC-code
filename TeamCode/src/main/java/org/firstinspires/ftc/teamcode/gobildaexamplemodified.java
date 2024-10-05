@@ -29,6 +29,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 /*
@@ -66,9 +67,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
  */
 
 
-@TeleOp(name="FTC Starter Kit Example Robot (INTO THE DEEP)", group="Robot")
+@TeleOp(name="Fractal Fusion debugging teleop", group="Robot")
 //@Disabled
-public class ConceptGoBildaStarterKitRobotTeleop_IntoTheDeep extends LinearOpMode {
+public class gobildaexamplemodified extends LinearOpMode {
 
     /* Declare OpMode members. */
     public DcMotor  leftDrive   = null; //the left drivetrain motor
@@ -102,7 +103,7 @@ public class ConceptGoBildaStarterKitRobotTeleop_IntoTheDeep extends LinearOpMod
     as far from the starting position, decrease it. */
 
     final double ARM_COLLAPSED_INTO_ROBOT  = 0;
-    final double ARM_COLLECT               = 250 * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLECT               = 246 * ARM_TICKS_PER_DEGREE;
     final double ARM_CLEAR_BARRIER         = 230 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN        = 160 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SAMPLE_IN_LOW   = 160 * ARM_TICKS_PER_DEGREE;
@@ -115,8 +116,8 @@ public class ConceptGoBildaStarterKitRobotTeleop_IntoTheDeep extends LinearOpMod
     final double INTAKE_DEPOSIT    =  0.5;
 
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
-    final double WRIST_FOLDED_IN   = 0.8333;
-    final double WRIST_FOLDED_OUT  = 0.0;
+    final double WRIST_FOLDED_IN   = 0.65;
+    final double WRIST_FOLDED_OUT  = 0.3;
 
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
@@ -124,6 +125,8 @@ public class ConceptGoBildaStarterKitRobotTeleop_IntoTheDeep extends LinearOpMod
     /* Variables that are used to set the arm to a specific position */
     double armPosition = (int)ARM_COLLAPSED_INTO_ROBOT;
     double armPositionFudgeFactor;
+
+    boolean foldedOut;
 
 
     @Override
@@ -193,6 +196,7 @@ public class ConceptGoBildaStarterKitRobotTeleop_IntoTheDeep extends LinearOpMod
             rotate  = gamepad1.right_stick_x;
 
 
+
             /* Here we "mix" the input channels together to find the power to apply to each motor.
             The both motors need to be set to a mix of how much you're retesting the robot move
             forward, and how much you're requesting the robot turn. When you ask the robot to rotate
@@ -240,6 +244,16 @@ public class ConceptGoBildaStarterKitRobotTeleop_IntoTheDeep extends LinearOpMod
                 intake.setPower(INTAKE_DEPOSIT);
             }
 
+            if (gamepad1.y && !foldedOut) {
+                wrist.setPosition(WRIST_FOLDED_OUT);
+                foldedOut = true;
+            }
+            else if (gamepad1.y && foldedOut) {
+                wrist.setPosition(WRIST_FOLDED_IN);
+                foldedOut = false;
+            }
+
+
 
             /* Here we create a "fudge factor" for the arm position.
             This allows you to adjust (or "fudge") the arm position slightly with the gamepad triggers.
@@ -275,10 +289,13 @@ public class ConceptGoBildaStarterKitRobotTeleop_IntoTheDeep extends LinearOpMod
                     armPosition = ARM_CLEAR_BARRIER;
                 }
 
-                else if (gamepad1.y){
+                /*else if (gamepad1.y){
                     /* This is the correct height to score the sample in the LOW BASKET */
-                    armPosition = ARM_SCORE_SAMPLE_IN_LOW;
-                }
+                    /*armPosition = ARM_SCORE_SAMPLE_IN_LOW;
+                }*/
+
+
+
 
                 else if (gamepad1.dpad_left) {
                     /* This turns off the intake, folds in the wrist, and moves the arm
@@ -340,11 +357,12 @@ public class ConceptGoBildaStarterKitRobotTeleop_IntoTheDeep extends LinearOpMod
             if (((DcMotorEx) armMotor).isOverCurrent()){
                 telemetry.addLine("MOTOR EXCEEDED CURRENT LIMIT!");
             }
-
+            if (foldedOut) telemetry.addLine("Out:True");
 
             /* send telemetry to the driver of the arm's current position and target position */
             telemetry.addData("armTarget: ", armMotor.getTargetPosition());
             telemetry.addData("arm Encoder: ", armMotor.getCurrentPosition());
+            telemetry.addData("servoPos:", wrist.getPosition());
             telemetry.update();
 
         }
