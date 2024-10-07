@@ -136,6 +136,7 @@ public class productionOpmode extends LinearOpMode {
         double forward;
         double rotate;
         double max;
+        double brakingFactor;
 
         /* Define and Initialize Motors */
         leftDrive  = hardwareMap.get(DcMotor.class, "left_front_drive"); //the left drivetrain motor
@@ -198,6 +199,7 @@ public class productionOpmode extends LinearOpMode {
             the right and left motors need to move in opposite directions. So we will add rotate to
             forward for the left motor, and subtract rotate from forward for the right motor. */
 
+            brakingFactor = 1 - (gamepad1.right_trigger * 0.5);
             left  = forward + rotate;
             right = forward - rotate;
 
@@ -210,8 +212,8 @@ public class productionOpmode extends LinearOpMode {
             }
 
             /* Set the motor power to the variables we've mixed and normalized */
-            leftDrive.setPower(left);
-            rightDrive.setPower(right);
+            leftDrive.setPower(left * brakingFactor);
+            rightDrive.setPower(right * brakingFactor);
 
 
 
