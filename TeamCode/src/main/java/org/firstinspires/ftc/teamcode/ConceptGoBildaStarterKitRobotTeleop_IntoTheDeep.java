@@ -66,7 +66,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
  */
 
 
-@TeleOp(name="FTC Starter Kit Example Robot (INTO THE DEEP)", group="Robot")
+@TeleOp(name="goBildaOfficialOpmode", group="Robot")
 //@Disabled
 public class ConceptGoBildaStarterKitRobotTeleop_IntoTheDeep extends LinearOpMode {
 
