@@ -66,7 +66,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
  */
 
 
-@TeleOp(name="Fractal Fusion debugging teleop", group="Robot")
+@TeleOp(name="debugOpmode", group="Robot")
 //@Disabled
 public class debugOpmode extends LinearOpMode {
 
@@ -115,8 +115,8 @@ public class debugOpmode extends LinearOpMode {
     final double INTAKE_DEPOSIT    =  0.5;
 
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
-    final double WRIST_FOLDED_IN   = 0.65;
-    final double WRIST_FOLDED_OUT  = 0.3;
+    final double WRIST_FOLDED_IN   = 0.35;
+    final double WRIST_FOLDED_OUT  = 0;
 
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
@@ -135,7 +135,7 @@ public class debugOpmode extends LinearOpMode {
          */
         double left;
         double right;
-         double forward;
+        double forward;
         double rotate;
         double max;
 
@@ -177,7 +177,7 @@ public class debugOpmode extends LinearOpMode {
 
         /* Make sure that the intake is off, and the wrist is folded in. */
         intake.setPower(INTAKE_OFF);
-        wrist.setPosition(WRIST_FOLDED_IN);
+        wrist.setPosition(WRIST_FOLDED_OUT);
 
         /* Send telemetry message to signify robot waiting */
         telemetry.addLine("Robot Ready.");
