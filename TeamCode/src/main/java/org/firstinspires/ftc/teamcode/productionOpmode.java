@@ -147,8 +147,8 @@ public class productionOpmode extends LinearOpMode {
 
         /* Most skid-steer/differential drive robots require reversing one motor to drive forward.
         for this robot, we reverse the right motor.*/
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
 
 
         /* Setting zeroPowerBehavior to BRAKE enables a "brake mode". This causes the motor to slow down
@@ -200,7 +200,7 @@ public class productionOpmode extends LinearOpMode {
             the right and left motors need to move in opposite directions. So we will add rotate to
             forward for the left motor, and subtract rotate from forward for the right motor. */
 
-            maxSpeedMultiplier = maxSpeed + (  (-gamepad1.right_trigger * (maxSpeed * 0.3)) + (gamepad1.left_trigger * maxSpeed) );
+            maxSpeedMultiplier = maxSpeed + (  (-gamepad1.right_trigger * (maxSpeed * 0.7)) + (gamepad1.left_trigger * maxSpeed) );
             left  = forward + rotate;
             right = forward - rotate;
 
