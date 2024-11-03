@@ -20,8 +20,9 @@
  *   SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.prescrimmagecode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -66,12 +67,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
  */
 
 
-@TeleOp(name="productionOpmodeManualArm", group="Robot")
-//@Disabled
-public class productionOpmode2manualarm extends LinearOpMode {
+@TeleOp(name="productionOpmodeManualArmbutAvyahn", group="Robot")
+@Disabled
+public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
 
     /* Declare OpMode members. */
-
     public DcMotor  leftDrive   = null; //the left drivetrain motor
     public DcMotor  rightDrive  = null; //the right drivetrain motor
     public DcMotor  armMotor    = null; //the arm motor
@@ -103,7 +103,7 @@ public class productionOpmode2manualarm extends LinearOpMode {
     as far from the starting position, decrease it. */
 
     final double ARM_COLLAPSED_INTO_ROBOT  = 0;
-    final double ARM_COLLECT               = 250 * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLECT               = 246 * ARM_TICKS_PER_DEGREE;
     final double ARM_CLEAR_BARRIER         = 230 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN        = 160 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SAMPLE_IN_LOW   = 160 * ARM_TICKS_PER_DEGREE;
@@ -116,17 +116,16 @@ public class productionOpmode2manualarm extends LinearOpMode {
     final double INTAKE_DEPOSIT    =  0.5;
 
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
-    final double WRIST_FOLDED_IN   = 0.833;
+    final double WRIST_FOLDED_IN   = 0.34;
     final double WRIST_FOLDED_OUT  = 0;
 
+    double linearMotion = 360 * ARM_TICKS_PER_DEGREE;
+
     /* A number in degrees that the triggers can adjust the arm position by */
-    final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
 
     /* Variables that are used to set the arm to a specific position */
     double armPosition = (int)ARM_COLLAPSED_INTO_ROBOT;
-    double armPositionFudgeFactor;
-    double rotation;
-    double armPositionFinal;
+    double armPositionLinearMotion;
 
 
     @Override
@@ -145,7 +144,6 @@ public class productionOpmode2manualarm extends LinearOpMode {
         leftDrive  = hardwareMap.get(DcMotor.class, "left_front_drive"); //the left drivetrain motor
         rightDrive = hardwareMap.get(DcMotor.class, "right_front_drive"); //the right drivetrain motor
         armMotor   = hardwareMap.get(DcMotor.class, "left_arm"); //the arm motor
-
 
         /* Most skid-steer/differential drive robots require reversing one motor to drive forward.
         for this robot, we reverse the right motor.*/
@@ -178,7 +176,7 @@ public class productionOpmode2manualarm extends LinearOpMode {
 
         /* Make sure that the intake is off, and the wrist is folded in. */
         intake.setPower(INTAKE_OFF);
-        wrist.setPosition(WRIST_FOLDED_IN);
+        wrist.setPosition(WRIST_FOLDED_OUT);
 
         /* Send telemetry message to signify robot waiting */
         telemetry.addLine("Robot Ready.");
@@ -202,7 +200,7 @@ public class productionOpmode2manualarm extends LinearOpMode {
             the right and left motors need to move in opposite directions. So we will add rotate to
             forward for the left motor, and subtract rotate from forward for the right motor. */
 
-            brakingFactor = 1 - (gamepad1.right_trigger * 0.5);
+            brakingFactor = 1 - (gamepad1.right_trigger * 0.9);
             left  = forward + rotate;
             right = forward - rotate;
 
@@ -253,7 +251,7 @@ public class productionOpmode2manualarm extends LinearOpMode {
             than the other, it "wins out". This variable is then multiplied by our FUDGE_FACTOR.
             The FUDGE_FACTOR is the number of degrees that we can adjust the arm by with this function. */
 
-            armPositionFudgeFactor = FUDGE_FACTOR * (gamepad2.right_trigger + (-gamepad2.left_trigger));
+            armPositionLinearMotion = linearMotion * (gamepad2.right_trigger + (-gamepad2.left_trigger));
 
 
 
@@ -282,6 +280,7 @@ public class productionOpmode2manualarm extends LinearOpMode {
                 else if (gamepad2.y){
                     /* This is the correct height to score the sample in the LOW BASKET */
                     armPosition = ARM_SCORE_SAMPLE_IN_LOW;
+                    wrist.setPosition(WRIST_FOLDED_OUT);
                 }
 
                 else if (gamepad2.dpad_left) {
@@ -312,13 +311,10 @@ public class productionOpmode2manualarm extends LinearOpMode {
                     wrist.setPosition(WRIST_FOLDED_IN);
             }
 
-            /* Here we set the target
-            position of our arm to match the variable that was selected
+            /* Here we set the target position of our arm to match the variable that was selected
             by the driver.
             We also set the target velocity (speed) the motor runs at, and use setMode to run it.*/
-            rotation = 180 * gamepad2.left_stick_x;
-            armPositionFinal = armPosition + rotation;
-            armMotor.setTargetPosition((int) (armPositionFinal  +armPositionFudgeFactor));
+            armMotor.setTargetPosition((int) (armPosition  +armPositionLinearMotion));
 
             ((DcMotorEx) armMotor).setVelocity(2100);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -343,12 +339,11 @@ public class productionOpmode2manualarm extends LinearOpMode {
             rounds it to the nearest whole number.
             */
 
-
             /* Check to see if our arm is over the current limit, and report via telemetry. */
             if (((DcMotorEx) armMotor).isOverCurrent()){
                 telemetry.addLine("MOTOR EXCEEDED CURRENT LIMIT!");
             }
-            telemetry.addData("armPos:", armMotor.getCurrentPosition());
+
 
             /* send telemetry to the driver of the arm's current position and target position */
             telemetry.addData("armTarget: ", armMotor.getTargetPosition());

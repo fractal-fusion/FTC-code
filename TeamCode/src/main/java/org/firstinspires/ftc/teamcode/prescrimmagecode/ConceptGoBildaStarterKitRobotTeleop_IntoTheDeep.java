@@ -20,8 +20,9 @@
  *   SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.prescrimmagecode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -66,9 +67,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
  */
 
 
-@TeleOp(name="productionOpmodeManualArmbutAvyahn", group="Robot")
-//@Disabled
-public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
+@TeleOp(name="goBildaOfficialOpmode", group="Robot")
+@Disabled
+public class ConceptGoBildaStarterKitRobotTeleop_IntoTheDeep extends LinearOpMode {
 
     /* Declare OpMode members. */
     public DcMotor  leftDrive   = null; //the left drivetrain motor
@@ -102,7 +103,7 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
     as far from the starting position, decrease it. */
 
     final double ARM_COLLAPSED_INTO_ROBOT  = 0;
-    final double ARM_COLLECT               = 246 * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLECT               = 250 * ARM_TICKS_PER_DEGREE;
     final double ARM_CLEAR_BARRIER         = 230 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN        = 160 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SAMPLE_IN_LOW   = 160 * ARM_TICKS_PER_DEGREE;
@@ -115,16 +116,15 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
     final double INTAKE_DEPOSIT    =  0.5;
 
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
-    final double WRIST_FOLDED_IN   = 0.34;
-    final double WRIST_FOLDED_OUT  = 0;
-
-    double linearMotion = 360 * ARM_TICKS_PER_DEGREE;
+    final double WRIST_FOLDED_IN   = 0.8333;
+    final double WRIST_FOLDED_OUT  = 0.0;
 
     /* A number in degrees that the triggers can adjust the arm position by */
+    final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
 
     /* Variables that are used to set the arm to a specific position */
     double armPosition = (int)ARM_COLLAPSED_INTO_ROBOT;
-    double armPositionLinearMotion;
+    double armPositionFudgeFactor;
 
 
     @Override
@@ -134,15 +134,16 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
          */
         double left;
         double right;
-        double forward;
+         double forward;
         double rotate;
         double max;
-        double brakingFactor;
+
 
         /* Define and Initialize Motors */
         leftDrive  = hardwareMap.get(DcMotor.class, "left_front_drive"); //the left drivetrain motor
         rightDrive = hardwareMap.get(DcMotor.class, "right_front_drive"); //the right drivetrain motor
         armMotor   = hardwareMap.get(DcMotor.class, "left_arm"); //the arm motor
+
 
         /* Most skid-steer/differential drive robots require reversing one motor to drive forward.
         for this robot, we reverse the right motor.*/
@@ -175,7 +176,7 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
 
         /* Make sure that the intake is off, and the wrist is folded in. */
         intake.setPower(INTAKE_OFF);
-        wrist.setPosition(WRIST_FOLDED_OUT);
+        wrist.setPosition(WRIST_FOLDED_IN);
 
         /* Send telemetry message to signify robot waiting */
         telemetry.addLine("Robot Ready.");
@@ -189,9 +190,9 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
 
             /* Set the drive and turn variables to follow the joysticks on the gamepad.
             the joysticks decrease as you push them up. So reverse the Y axis. */
-
             forward = -gamepad1.left_stick_y;
             rotate  = gamepad1.right_stick_x;
+
 
             /* Here we "mix" the input channels together to find the power to apply to each motor.
             The both motors need to be set to a mix of how much you're retesting the robot move
@@ -199,7 +200,6 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
             the right and left motors need to move in opposite directions. So we will add rotate to
             forward for the left motor, and subtract rotate from forward for the right motor. */
 
-            brakingFactor = 1 - (gamepad1.right_trigger * 0.9);
             left  = forward + rotate;
             right = forward - rotate;
 
@@ -212,8 +212,8 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
             }
 
             /* Set the motor power to the variables we've mixed and normalized */
-            leftDrive.setPower(left * brakingFactor);
-            rightDrive.setPower(right * brakingFactor);
+            leftDrive.setPower(left);
+            rightDrive.setPower(right);
 
 
 
@@ -225,19 +225,19 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
             And if the user presses B it reveres the servo to spit out the element.*/
 
             /* TECH TIP: If Else loops:
-            We're using an else if loop on "gamepad2.x" and "gamepad2.b" just in case
+            We're using an else if loop on "gamepad1.x" and "gamepad1.b" just in case
             multiple buttons are pressed at the same time. If the driver presses both "a" and "x"
             at the same time. "a" will win over and the intake will turn on. If we just had
             three if statements, then it will set the intake servo's power to multiple speeds in
             one cycle. Which can cause strange behavior. */
 
-            if (gamepad2.a) {
+            if (gamepad1.a) {
                 intake.setPower(INTAKE_COLLECT);
             }
-            else if (gamepad2.x) {
+            else if (gamepad1.x) {
                 intake.setPower(INTAKE_OFF);
             }
-            else if (gamepad2.b) {
+            else if (gamepad1.b) {
                 intake.setPower(INTAKE_DEPOSIT);
             }
 
@@ -250,7 +250,7 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
             than the other, it "wins out". This variable is then multiplied by our FUDGE_FACTOR.
             The FUDGE_FACTOR is the number of degrees that we can adjust the arm by with this function. */
 
-            armPositionLinearMotion = linearMotion * (gamepad2.right_trigger + (-gamepad2.left_trigger));
+            armPositionFudgeFactor = FUDGE_FACTOR * (gamepad1.right_trigger + (-gamepad1.left_trigger));
 
 
 
@@ -261,14 +261,14 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
             it folds out the wrist to make sure it is in the correct orientation to intake, and it
             turns the intake on to the COLLECT mode.*/
 
-            if(gamepad2.right_bumper){
+            if(gamepad1.right_bumper){
                 /* This is the intaking/collecting arm position */
                 armPosition = ARM_COLLECT;
                 wrist.setPosition(WRIST_FOLDED_OUT);
                 intake.setPower(INTAKE_COLLECT);
                 }
 
-                else if (gamepad2.left_bumper){
+                else if (gamepad1.left_bumper){
                     /* This is about 20° up from the collecting position to clear the barrier
                     Note here that we don't set the wrist position or the intake power when we
                     select this "mode", this means that the intake and wrist will continue what
@@ -276,13 +276,12 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
                     armPosition = ARM_CLEAR_BARRIER;
                 }
 
-                else if (gamepad2.y){
+                else if (gamepad1.y){
                     /* This is the correct height to score the sample in the LOW BASKET */
                     armPosition = ARM_SCORE_SAMPLE_IN_LOW;
-                    wrist.setPosition(WRIST_FOLDED_OUT);
                 }
 
-                else if (gamepad2.dpad_left) {
+                else if (gamepad1.dpad_left) {
                     /* This turns off the intake, folds in the wrist, and moves the arm
                     back to folded inside the robot. This is also the starting configuration */
                     armPosition = ARM_COLLAPSED_INTO_ROBOT;
@@ -290,20 +289,20 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
                     wrist.setPosition(WRIST_FOLDED_IN);
                 }
 
-                else if (gamepad2.dpad_right){
+                else if (gamepad1.dpad_right){
                     /* This is the correct height to score SPECIMEN on the HIGH CHAMBER */
                     armPosition = ARM_SCORE_SPECIMEN;
                     wrist.setPosition(WRIST_FOLDED_IN);
                 }
 
-                else if (gamepad2.dpad_up){
+                else if (gamepad1.dpad_up){
                     /* This sets the arm to vertical to hook onto the LOW RUNG for hanging */
                     armPosition = ARM_ATTACH_HANGING_HOOK;
                     intake.setPower(INTAKE_OFF);
                     wrist.setPosition(WRIST_FOLDED_IN);
                 }
 
-                else if (gamepad2.dpad_down){
+                else if (gamepad1.dpad_down){
                     /* this moves the arm down to lift the robot up once it has been hooked */
                     armPosition = ARM_WINCH_ROBOT;
                     intake.setPower(INTAKE_OFF);
@@ -313,7 +312,7 @@ public class productionOpmodeManualArmbutAvyahn extends LinearOpMode {
             /* Here we set the target position of our arm to match the variable that was selected
             by the driver.
             We also set the target velocity (speed) the motor runs at, and use setMode to run it.*/
-            armMotor.setTargetPosition((int) (armPosition  +armPositionLinearMotion));
+            armMotor.setTargetPosition((int) (armPosition  +armPositionFudgeFactor));
 
             ((DcMotorEx) armMotor).setVelocity(2100);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
