@@ -9,12 +9,15 @@ public class productionOpmode extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Drivetrain drivetrain = new Drivetrain(hardwareMap);
+        Arm arm = new Arm(hardwareMap);
 
         waitForStart();
 
         while (opModeIsActive())
         {
-            drivetrain.move(gamepad1);
+            drivetrain.drive(gamepad1);
+
+            arm.controlViperslides(gamepad2);
         }
     }
 }

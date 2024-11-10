@@ -22,7 +22,7 @@ public class Drivetrain {
         backLeft.setDirection(DcMotor.Direction.REVERSE);
     }
 
-    public void move(Gamepad gamepad1)
+    public void drive(Gamepad gamepad1)
     {
         double y = -gamepad1.left_stick_y;
         double x = gamepad1.left_stick_x * 1.1;
