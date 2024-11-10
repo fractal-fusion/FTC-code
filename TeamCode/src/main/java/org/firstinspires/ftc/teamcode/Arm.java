@@ -23,7 +23,7 @@ public class Arm {
     private final double gearReduction = 0.0;
 
     private final double viperslideMaxInches = 38.4;
-    private final double viperslideSpeedInchesPerSecond = 2;
+    private final double viperslideSpeedInchesPerSecond = 2.0;
 
     private final double getEncoderTicksPerDegrees = 19.7924893140647;
     private final double encoderTicksPerInches = (encoderPulsesPerRevolution * gearReduction)
@@ -46,8 +46,8 @@ public class Arm {
     }
 
     public void controlViperslides(Gamepad gamepad) {
-        double extension_factor = clampDouble(gamepad.left_stick_y, 0, 1);
-        int target = (int) (extension_factor * (encoderTicksPerInches * (viperslideMaxInches - 5) ));
+        double extension_factor = clampDouble(gamepad.left_stick_y, 0.0, 1.0);
+        int target = (int) (extension_factor * (encoderTicksPerInches * (viperslideMaxInches - 5.0) ));
 
         viperslideLeft.setTargetPosition(target);
         viperslideRight.setTargetPosition(target);
