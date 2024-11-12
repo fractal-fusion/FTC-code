@@ -19,15 +19,24 @@ public class Arm {
 
     //36.2mm
     private final double pulleyDiameterInches = 1.425197;
-    private final double encoderPulsesPerRevolution = 537.7;
-    private final double gearReduction = 0.0;
+
+    private final double extensionEncoderPulsesPerRevolution = 537.7;
+    private final double rotationEncoderPulsesPerRevolution = 	1993.6;
+
+    private final double rotationGearReduction = 5.0;
+    private final double extensionGearReduction = 1.0;
 
     private final double viperslideMaxInches = 38.4;
     private final double viperslideSpeedInchesPerSecond = 2.0;
+    //Subtracted from the max inches of the viperslide to limit its extension
+    private final double viperLimit = 5.0;
 
-    private final double getEncoderTicksPerDegrees = 19.7924893140647;
-    private final double encoderTicksPerInches = (encoderPulsesPerRevolution * gearReduction)
+    private final double encoderTicksPerDegrees = (rotationEncoderPulsesPerRevolution * rotationGearReduction)
+                                                / (360);
+    private final double encoderTicksPerInches = (extensionEncoderPulsesPerRevolution * extensionGearReduction)
                                                 / (pulleyDiameterInches * Math.PI);
+    public final static double collectionDegrees = 15.0;
+    public final static double scoreBucketDegrees = 75.0;
 
     public Arm(HardwareMap hardwareMap) {
         armRotationLeft = hardwareMap.get(DcMotor.class, "armleft");
@@ -47,7 +56,7 @@ public class Arm {
 
     public void controlViperslides(Gamepad gamepad) {
         double extension_factor = clampDouble(gamepad.left_stick_y, 0.0, 1.0);
-        int target = (int) (extension_factor * (encoderTicksPerInches * (viperslideMaxInches - 5.0) ));
+        int target = (int) (extension_factor * (encoderTicksPerInches * (viperslideMaxInches - viperLimit) ));
 
         viperslideLeft.setTargetPosition(target);
         viperslideRight.setTargetPosition(target);
@@ -58,5 +67,14 @@ public class Arm {
         //sets the power of the motors so that it moves the speed of how many inches per second specified
         ((DcMotorEx) viperslideLeft).setVelocity(encoderTicksPerInches * viperslideSpeedInchesPerSecond);
         ((DcMotorEx) viperslideRight).setVelocity(encoderTicksPerInches * viperslideSpeedInchesPerSecond);
+    }
+
+    public void moveArm(double degrees) {
+        int target = (int) (degrees * encoderTicksPerDegrees);
+        armRotationLeft.setTargetPosition(target);
+        armRotationRight.setTargetPosition(target);
+
+        viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 }

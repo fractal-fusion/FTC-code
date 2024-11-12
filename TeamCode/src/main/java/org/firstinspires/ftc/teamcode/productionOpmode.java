@@ -18,6 +18,19 @@ public class productionOpmode extends LinearOpMode {
             drivetrain.drive(gamepad1);
 
             arm.controlViperslides(gamepad2);
+            if (gamepad2.dpad_left)
+            {
+                arm.moveArm(0.0);
+            }
+            else if (gamepad2.left_bumper)
+            {
+                arm.moveArm(Arm.collectionDegrees);
+            }
+            else if (gamepad2.y)
+            {
+                arm.moveArm(Arm.scoreBucketDegrees);
+            }
+
         }
     }
 }
