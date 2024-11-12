@@ -76,5 +76,8 @@ public class Arm {
 
         viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
     }
 }
+
+
