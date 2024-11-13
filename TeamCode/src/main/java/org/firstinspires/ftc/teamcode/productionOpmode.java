@@ -28,14 +28,17 @@ public class productionOpmode extends LinearOpMode {
             {
                 arm.moveArm(Arm.scoreBucketDegrees);
             }
+            //claw movement
             if (gamepad2.a) {
                 intake.mode(Intake.open);
             }
             else if (gamepad2.b) {
                 intake.mode(Intake.close);
             }
+            //wrist movement
             intake.wristPos(gamepad2);
-
+            //hang method
+            arm.hangArm(gamepad2);
         }
 
         }

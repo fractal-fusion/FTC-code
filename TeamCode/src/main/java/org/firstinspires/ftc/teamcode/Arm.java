@@ -37,6 +37,8 @@ public class Arm {
                                                 / (pulleyDiameterInches * Math.PI);
     public final static double collectionDegrees = 15.0;
     public final static double scoreBucketDegrees = 75.0;
+    private final double armHookExtend = 120 * encoderTicksPerDegrees;
+    private final double armHookRetract = 15 * encoderTicksPerDegrees;
 
     public Arm(HardwareMap hardwareMap) {
         armRotationLeft = hardwareMap.get(DcMotor.class, "armleft");
@@ -77,4 +79,16 @@ public class Arm {
         viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
+    public void hangArm(Gamepad gamepad2){
+        int targetHang = 0;
+        if (gamepad2.dpad_up) {
+            targetHang = (int) armHookExtend;
+        }
+        if (gamepad2.dpad_down){
+            targetHang = (int) armHookRetract;
+        }
+        armRotationLeft.setTargetPosition(targetHang);
+
+    }
 }
+
