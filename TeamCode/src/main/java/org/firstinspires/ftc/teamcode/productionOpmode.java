@@ -34,6 +34,8 @@ public class productionOpmode extends LinearOpMode {
             else if (gamepad2.b) {
                 intake.mode(Intake.close);
             }
+            intake.wristPos(gamepad2);
+
         }
 
         }
