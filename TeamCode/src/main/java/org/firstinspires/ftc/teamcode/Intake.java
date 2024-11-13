@@ -21,20 +21,19 @@ public class Intake {
     }
     public void mode(double degrees){
        double servoTarget = degrees/360;
-       wristServo.setPosition(servoTarget);
+       clawServo.setPosition(servoTarget);
     }
-    public void wristPos(Gamepad gamepad2){
-        double servoTarget;
-        if(gamepad2.right_stick_x>=0)
-        {
-            servoTarget = gamepad2.right_stick_x*0.5+restingPos;
+    public void wristPos(Gamepad gamepad2) {
+        double servoTarget = 0;
+        if (gamepad2.right_stick_x >= 0) {
+            servoTarget = gamepad2.right_stick_x * 0.5 + restingPos;
+        } else if (gamepad2.right_stick_x < 0) {
+            servoTarget = gamepad2.right_stick_x * 0.5 + restingPos;
         }
-        else if(gamepad2.right_stick_x<0)
-        {
-            servoTarget = gamepad2.right_stick_x*0.5+restingPos;
-        }
-
+        wristServo.setPosition(servoTarget);
 
     }
-
+    public void setRestingPos(double servoPos){
+        wristServo.setPosition(servoPos);
+    }
 }

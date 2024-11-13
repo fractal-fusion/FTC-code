@@ -13,7 +13,7 @@ public class productionOpmode extends LinearOpMode {
         Intake intake = new Intake(hardwareMap);
 
         waitForStart();
-
+        intake.setRestingPos(0.5);
         while (opModeIsActive()) {
             drivetrain.drive(gamepad1);
 
