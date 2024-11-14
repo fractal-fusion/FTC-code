@@ -18,8 +18,8 @@ public class Drivetrain {
         frontRight = hardwareMap.get(DcMotor.class, "frontright");
         backRight = hardwareMap.get(DcMotor.class, "backright");
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
     }
 
     public void drive(Gamepad gamepad)

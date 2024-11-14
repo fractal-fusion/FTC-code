@@ -43,7 +43,6 @@ public class Arm {
     //probably not accurate values
     public final static double hangExtendedDegrees = 120.0;
     public final static double hangClimbDegrees = 0.0;
-
     public Arm(HardwareMap hardwareMap) {
         armRotationLeft = hardwareMap.get(DcMotor.class, "armleft");
         armRotationRight = hardwareMap.get(DcMotor.class, "armright");
@@ -55,15 +54,16 @@ public class Arm {
         viperslideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         viperslideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        armRotationLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        viperslideLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        armRotationRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        viperslideRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
     public void controlViperslides(Gamepad gamepad) {
 //        double extension_factor = clampDouble(gamepad.left_stick_y, 0.0, 1.0);
 //        int target = (int) (extension_factor * (encoderTicksPerInches * (viperslideMaxInches - viperLimit) ));
-        viperslideIncrementTotalInches += gamepad.left_stick_y * viperslideIncrementInches;
+        //maxSpeedMultiplier = maxSpeed + ((-gamepad.right_trigger * (maxSpeed * 0.7));
+        viperslideIncrementTotalInches += -gamepad.left_stick_y * viperslideIncrementInches;
         viperslideIncrementTotalInches = clampDouble(viperslideIncrementTotalInches, 0.0, viperslideMaxInches);
         int target = (int) (viperslideIncrementTotalInches * encoderTicksPerInches);
 
