@@ -22,21 +22,25 @@ public class Drivetrain {
         backLeft.setDirection(DcMotor.Direction.REVERSE);
     }
 
-    public void drive(Gamepad gamepad1)
+    public void drive(Gamepad gamepad)
     {
-        double y = -gamepad1.left_stick_y;
-        double x = gamepad1.left_stick_x * 1.1;
-        double rx = gamepad1.right_stick_x;
+        double y = -gamepad.left_stick_y;
+        double x = gamepad.left_stick_x * 1.1;
+        double rx = gamepad.right_stick_x;
 
+        double maxSpeed = 0.5;
+        double maxSpeedMultiplier;
+
+        maxSpeedMultiplier = maxSpeed + ((-gamepad.right_trigger * (maxSpeed * 0.7)) + (gamepad.left_trigger * maxSpeed));
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx) / denominator;
         double backLeftPower = (y - x + rx) / denominator;
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
 
-        frontLeft.setPower(frontLeftPower);
-        backLeft.setPower(backLeftPower);
-        frontRight.setPower(frontRightPower);
-        backRight.setPower(backRightPower);
+        frontLeft.setPower(frontLeftPower * maxSpeedMultiplier);
+        backLeft.setPower(backLeftPower * maxSpeedMultiplier);
+        frontRight.setPower(frontRightPower * maxSpeedMultiplier);
+        backRight.setPower(backRightPower * maxSpeedMultiplier);
     }
 }

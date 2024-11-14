@@ -28,13 +28,16 @@ public class Arm {
 
     private final double viperslideMaxInches = 38.4;
     private final double viperslideSpeedInchesPerSecond = 2.0;
+    private final double viperslideIncrementInches = 0.1;
     //Subtracted from the max inches of the viperslide to limit its extension
     private final double viperLimit = 5.0;
+    double viperslideIncrementTotalInches = 0.0;
 
     private final double encoderTicksPerDegrees = (rotationEncoderPulsesPerRevolution * rotationGearReduction)
                                                 / (360);
     private final double encoderTicksPerInches = (extensionEncoderPulsesPerRevolution * extensionGearReduction)
                                                 / (pulleyDiameterInches * Math.PI);
+
     public final static double collectionDegrees = 15.0;
     public final static double scoreBucketDegrees = 75.0;
     //probably not accurate values
@@ -58,8 +61,11 @@ public class Arm {
     }
 
     public void controlViperslides(Gamepad gamepad) {
-        double extension_factor = clampDouble(gamepad.left_stick_y, 0.0, 1.0);
-        int target = (int) (extension_factor * (encoderTicksPerInches * (viperslideMaxInches - viperLimit) ));
+//        double extension_factor = clampDouble(gamepad.left_stick_y, 0.0, 1.0);
+//        int target = (int) (extension_factor * (encoderTicksPerInches * (viperslideMaxInches - viperLimit) ));
+        viperslideIncrementTotalInches += gamepad.left_stick_y * viperslideIncrementInches;
+        viperslideIncrementTotalInches = clampDouble(viperslideIncrementTotalInches, 0.0, viperslideMaxInches);
+        int target = (int) (viperslideIncrementTotalInches * encoderTicksPerInches);
 
         viperslideLeft.setTargetPosition(target);
         viperslideRight.setTargetPosition(target);
