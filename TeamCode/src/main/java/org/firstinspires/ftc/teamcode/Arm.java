@@ -37,6 +37,9 @@ public class Arm {
                                                 / (pulleyDiameterInches * Math.PI);
     public final static double collectionDegrees = 15.0;
     public final static double scoreBucketDegrees = 75.0;
+    //probably not accurate values
+    public final static double hangExtendedDegrees = 120.0;
+    public final static double hangClimbDegrees = 0.0;
 
     public Arm(HardwareMap hardwareMap) {
         armRotationLeft = hardwareMap.get(DcMotor.class, "armleft");

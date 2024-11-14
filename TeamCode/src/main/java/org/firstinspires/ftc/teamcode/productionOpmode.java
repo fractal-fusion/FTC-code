@@ -27,23 +27,28 @@ public class productionOpmode extends LinearOpMode {
             intake.controlWrist(gamepad2);
 
             //preset positions for gamepad2
-            if (gamepad2.dpad_left)
-            {
+            if (gamepad2.dpad_left) {
                 arm.moveArm(0.0);
             }
-            else if (gamepad2.left_bumper)
-            {
+            else if (gamepad2.left_bumper) {
                 arm.moveArm(Arm.collectionDegrees);
             }
-            else if (gamepad2.y)
-            {
+            else if (gamepad2.y) {
                 arm.moveArm(Arm.scoreBucketDegrees);
             }
+            //intake control
             else if (gamepad2.a) {
                 intake.mode(Intake.open);
             }
             else if (gamepad2.b) {
                 intake.mode(Intake.close);
+            }
+            //hanging control
+            else if (gamepad2.dpad_up) {
+                arm.moveArm(Arm.hangExtendedDegrees);
+            }
+            else if (gamepad2.dpad_down) {
+                arm.moveArm(Arm.hangClimbDegrees);
             }
 
         }
