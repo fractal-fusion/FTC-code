@@ -74,7 +74,7 @@ public class Arm {
         armRotationLeft.setTargetPosition(target);
         armRotationRight.setTargetPosition(target);
 
-        viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 }
