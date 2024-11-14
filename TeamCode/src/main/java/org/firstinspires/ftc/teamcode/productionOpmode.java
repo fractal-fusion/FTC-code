@@ -8,16 +8,25 @@ public class productionOpmode extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        //initialize objects
         Drivetrain drivetrain = new Drivetrain(hardwareMap);
         Arm arm = new Arm(hardwareMap);
+        Intake intake = new Intake(hardwareMap);
+        //set intake to resting position on init
+        intake.setRestingPos();
 
         waitForStart();
 
         while (opModeIsActive())
         {
+            //gamepad 1 driving
             drivetrain.drive(gamepad1);
 
+            //gamepad 2 arm
             arm.controlViperslides(gamepad2);
+            intake.controlWrist(gamepad2);
+
+            //preset positions for gamepad2
             if (gamepad2.dpad_left)
             {
                 arm.moveArm(0.0);
@@ -29,6 +38,12 @@ public class productionOpmode extends LinearOpMode {
             else if (gamepad2.y)
             {
                 arm.moveArm(Arm.scoreBucketDegrees);
+            }
+            else if (gamepad2.a) {
+                intake.mode(Intake.open);
+            }
+            else if (gamepad2.b) {
+                intake.mode(Intake.close);
             }
 
         }
