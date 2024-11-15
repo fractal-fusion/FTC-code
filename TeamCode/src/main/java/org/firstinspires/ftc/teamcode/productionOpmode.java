@@ -12,8 +12,13 @@ public class productionOpmode extends LinearOpMode {
         Drivetrain drivetrain = new Drivetrain(hardwareMap);
         Arm arm = new Arm(hardwareMap);
         Intake intake = new Intake(hardwareMap);
+
         //set intake to resting position on init
         intake.setRestingPos();
+
+        //telemetry to show the robot is initialized
+        telemetry.addLine("Robot Ready.");
+        telemetry.update();
 
         waitForStart();
 
