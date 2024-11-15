@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -31,7 +32,7 @@ public class Arm {
 
     //viperslide constants used in extension
     private final double viperslideMaxInches = 38.4;
-    private final double viperslideSpeedInchesPerSecond = 2.0;
+    private final double viperslideSpeedInchesPerSecond = 8.0;
     private final double viperslideIncrementInches = 0.1;
     //Subtracted from the max inches of the viperslide to limit its extension
     private final double viperLimit = 5.0;
@@ -45,30 +46,37 @@ public class Arm {
     private final double encoderTicksPerInches = (extensionEncoderPulsesPerRevolution * extensionGearReduction)
                                                 / (pulleyDiameterInches * Math.PI);
 
-    //define preset positions of the arm
+    //define preset positions of the arm.
     public final static double collectionDegrees = 15.0;
     public final static double scoreBucketDegrees = 75.0;
     public final static double hangExtendedDegrees = 120.0;
     public final static double hangClimbDegrees = 15.0;
 
+    private OpMode opmode;
+
     //constructor which acts as an initialization function for whenever an object of the class is created
-    public Arm(HardwareMap hardwareMap) {
-        armRotationLeft = hardwareMap.get(DcMotor.class, "armleft");
-        armRotationRight = hardwareMap.get(DcMotor.class, "armright");
-        viperslideLeft = hardwareMap.get(DcMotor.class, "viperleft");
-        viperslideRight = hardwareMap.get(DcMotor.class, "viperright");
+    public Arm(OpMode linearOpMode) {
+        this.opmode = linearOpMode;
+        armRotationLeft = opmode.hardwareMap.get(DcMotor.class, "armleft");
+        armRotationRight = opmode.hardwareMap.get(DcMotor.class, "armright");
+        viperslideLeft = opmode.hardwareMap.get(DcMotor.class, "viperleft");
+        viperslideRight = opmode.hardwareMap.get(DcMotor.class, "viperright");
 
         armRotationLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         armRotationRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         viperslideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         viperslideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        armRotationRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        viperslideRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        armRotationLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        armRotationRight.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        viperslideLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        viperslideRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
     }
 
-    //main function which controls extension of the viperslides
+    //main function which controls extension of the viperslides.
     public void controlViperslides(Gamepad gamepad) {
         //old method of extension that does not hold the position of the viperslide on release of the joystick
 
@@ -91,19 +99,25 @@ public class Arm {
         viperslideLeft.setTargetPosition(target);
         viperslideRight.setTargetPosition(target);
 
-        viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
         //sets the power of the motors so that it moves the speed of how many inches per second specified, multiplied by the speed multiplier
         ((DcMotorEx) viperslideLeft).setVelocity(encoderTicksPerInches * (viperslideSpeedInchesPerSecond * maxSpeedMultiplier));
         ((DcMotorEx) viperslideRight).setVelocity(encoderTicksPerInches * (viperslideSpeedInchesPerSecond * maxSpeedMultiplier));
+
+        viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        opmode.telemetry.addData("viperslide target: ", target);
+        opmode.telemetry.update();
     }
 
-    //main function for controlling the position of the arm in degrees
+    //main function for controlling the position of the arm in degrees.
     public void moveArm(double degrees) {
         int target = (int) (degrees * encoderTicksPerDegrees);
         armRotationLeft.setTargetPosition(target);
         armRotationRight.setTargetPosition(target);
+
+        ((DcMotorEx) armRotationLeft).setVelocity(500);
+        ((DcMotorEx) armRotationRight).setVelocity(500);
 
         armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);

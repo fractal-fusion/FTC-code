@@ -10,7 +10,7 @@ public class productionOpmode extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //initialize objects
         Drivetrain drivetrain = new Drivetrain(hardwareMap);
-        Arm arm = new Arm(hardwareMap);
+        Arm arm = new Arm(this);
         Intake intake = new Intake(hardwareMap);
 
         //set intake to resting position on init
