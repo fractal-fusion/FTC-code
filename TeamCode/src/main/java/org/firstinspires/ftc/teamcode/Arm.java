@@ -75,7 +75,13 @@ public class Arm {
         //double extension_factor = clampDouble(gamepad.left_stick_y, 0.0, 1.0);
         // int target = (int) (extension_factor * (encoderTicksPerInches * (viperslideMaxInches - viperLimit) ));
 
-        //maxSpeedMultiplier = maxSpeed + ((-gamepad.right_trigger * (maxSpeed * 0.7));
+        //slow down viperslide extension using the right trigger
+        double maxSpeed = 1;
+        double maxSpeedMultiplier;
+
+        //subtracts the right trigger value which is mapped onto a range of 0.0 to 0.7, making 0.3 the maximum speed
+        //when it is completely held down
+        maxSpeedMultiplier = maxSpeed + ((-gamepad.right_trigger * (maxSpeed * 0.7)));
 
         //new method with a running total which holds the position of the viperslide
         viperslideIncrementTotalInches += -gamepad.left_stick_y * viperslideIncrementInches;
@@ -88,9 +94,9 @@ public class Arm {
         viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        //sets the power of the motors so that it moves the speed of how many inches per second specified
-        ((DcMotorEx) viperslideLeft).setVelocity(encoderTicksPerInches * viperslideSpeedInchesPerSecond);
-        ((DcMotorEx) viperslideRight).setVelocity(encoderTicksPerInches * viperslideSpeedInchesPerSecond);
+        //sets the power of the motors so that it moves the speed of how many inches per second specified, multiplied by the speed multiplier
+        ((DcMotorEx) viperslideLeft).setVelocity(encoderTicksPerInches * (viperslideSpeedInchesPerSecond * maxSpeedMultiplier));
+        ((DcMotorEx) viperslideRight).setVelocity(encoderTicksPerInches * (viperslideSpeedInchesPerSecond * maxSpeedMultiplier));
     }
 
     //main function for controlling the position of the arm in degrees
