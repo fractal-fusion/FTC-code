@@ -71,8 +71,8 @@ public class Arm {
         armRotationLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         armRotationRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        viperslideLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        viperslideRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        viperslideLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        viperslideRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
