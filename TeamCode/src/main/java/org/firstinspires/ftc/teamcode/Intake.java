@@ -21,7 +21,8 @@ public class Intake {
     double wristIncrementTotal = 0.0;
     double wristIncrement = 0.005;
 
-    private boolean lastButtonState;
+    private boolean wristHorizontal = true;
+    private boolean lastButtonState = false;
 
     private OpMode opMode;
 
@@ -54,14 +55,17 @@ public class Intake {
         double servoTarget = wristIncrementTotal;
         wrist.setPosition(servoTarget);
     }
-        public void toggleWristPosition(boolean buttonpressed) {
-            if (buttonpressed && !lastButtonState) {
-                wrist.setPosition(wristHorizontalPos);
-                lastButtonState = false;
-            }
-            else if (buttonpressed && lastButtonState) {
-                wrist.setPosition(wristVerticalPos);
-                lastButtonState = true;
+        public void toggleWristPosition(boolean buttonState) {
+            if (buttonState && !lastButtonState) {
+                if (wristHorizontal) {
+                    wrist.setPosition(wristVerticalPos);
+                    wristHorizontal = false;
+                }
+                else {
+                    wrist.setPosition(wristHorizontalPos);
+                    wristHorizontal = true;
+                }
+                lastButtonState = buttonState;
             }
         }
 
