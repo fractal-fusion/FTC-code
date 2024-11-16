@@ -31,6 +31,7 @@ public class Intake {
     //sets the open or close mode of the claw
     public void mode(double servoPos) {
         claw.setPosition(servoPos);
+        opMode.telemetry.addData("claw position", servoPos);
     }
 
     //lets the passed in gamepad control the wrist

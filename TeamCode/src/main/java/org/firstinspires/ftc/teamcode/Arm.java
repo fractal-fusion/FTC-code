@@ -30,7 +30,7 @@ public class Arm {
     private final double extensionGearReduction = 1.0;
 
     //viperslide constants used in extension
-    private final double viperslideMaxInches = 34.4;
+    private double viperslideMaxInches = 35.5;
     private final double viperslideSpeedInchesPerSecond = 8.5;
     private final double viperslideIncrementInches = 0.1;
     //Subtracted from the max inches of the viperslide to limit its extension
@@ -38,6 +38,8 @@ public class Arm {
     //running total of viperslide inches to hold the viper slide in place
     //when there are no joystick inputs
     double viperslideIncrementTotalInches = 0.0;
+    double rotationAngle;
+
 //    private final double rotationIncrementDegrees = 0.5;
 //    double rotationIncrementTotalDegrees = 0.0;
 
@@ -52,8 +54,8 @@ public class Arm {
     public final static double scoreBucketDegrees = 75.0;
     public final static double hangExtendedDegrees = 120.0;
     public final static double hangClimbDegrees = 15.0;
-    public final static double collectionDegrees = 5.0;
-    public final static double restingDegrees = 5.0;
+    public final static double collectionDegrees = 10.0;
+    public final static double restingDegrees = 10.0;
 
     private OpMode opMode;
 
@@ -94,6 +96,16 @@ public class Arm {
         //when it is completely held down
         maxSpeedMultiplier = maxSpeed + ((-gamepad.right_trigger * (maxSpeed * 0.5)));
 
+//        viperslideMaxInches = 42/Math.cos(rotationAngle);
+
+        //restrict the horizontal extension
+        if (rotationAngle < 75) {
+            viperslideMaxInches = 15.0;
+        }
+        else {
+            viperslideMaxInches = 35.5;
+        }
+
         //new method with a running total which holds the position of the viperslide
         viperslideIncrementTotalInches += -gamepad.left_stick_y * viperslideIncrementInches;
         viperslideIncrementTotalInches = clampDouble(viperslideIncrementTotalInches, 0.0, viperslideMaxInches);
@@ -111,12 +123,14 @@ public class Arm {
 
         opMode.telemetry.addData("viperslide target: ", target);
         opMode.telemetry.addData("viperslide inches: ", viperslideIncrementTotalInches);
+        opMode.telemetry.addData("viperslide max inches", viperslideMaxInches);
         opMode.telemetry.update();
     }
 
     //main function for controlling the position of the arm in degrees.
     public void moveArm(double degrees) {
-        int target = (int) (degrees * encoderTicksPerDegrees);
+        rotationAngle = degrees;
+        int target = (int) (rotationAngle * encoderTicksPerDegrees);
         armRotationLeft.setTargetPosition(target);
         armRotationRight.setTargetPosition(target);
 
@@ -126,8 +140,9 @@ public class Arm {
         armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        opMode.telemetry.addData("arm degrees: ", degrees);
+        opMode.telemetry.addData("arm degrees: ", rotationAngle);
         opMode.telemetry.addData("arm target: ", target);
+        opMode.telemetry.update();
     }
 
 //    public void controlArm(Gamepad gamepad) {
