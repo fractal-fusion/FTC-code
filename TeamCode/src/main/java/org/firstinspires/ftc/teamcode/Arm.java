@@ -48,7 +48,7 @@ public class Arm {
                                                 / (pulleyDiameterInches * Math.PI);
 
     //define preset positions of the arm.
-    public final static double clearBarrierDegrees = 35.0;
+    public final static double clearBarrierDegrees = 20.0;
     public final static double scoreBucketDegrees = 75.0;
     public final static double hangExtendedDegrees = 120.0;
     public final static double hangClimbDegrees = 15.0;

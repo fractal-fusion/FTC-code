@@ -34,6 +34,9 @@ public class Intake {
         double servoTarget = (gamepad.right_stick_x * 0.5) + wristRestingPos;
         wrist.setPosition(servoTarget);
     }
+//    public void toggleWristPosition() {
+//
+//    }
 
     //returns the wrist to resting position
     public void setRestingPos() {
