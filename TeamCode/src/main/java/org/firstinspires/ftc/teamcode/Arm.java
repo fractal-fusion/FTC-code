@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Arm {
@@ -31,14 +30,16 @@ public class Arm {
     private final double extensionGearReduction = 1.0;
 
     //viperslide constants used in extension
-    private final double viperslideMaxInches = 38.4;
-    private final double viperslideSpeedInchesPerSecond = 8.0;
+    private final double viperslideMaxInches = 34.4;
+    private final double viperslideSpeedInchesPerSecond = 8.5;
     private final double viperslideIncrementInches = 0.1;
     //Subtracted from the max inches of the viperslide to limit its extension
     private final double viperLimit = 5.0;
     //running total of viperslide inches to hold the viper slide in place
     //when there are no joystick inputs
     double viperslideIncrementTotalInches = 0.0;
+//    private final double rotationIncrementDegrees = 0.5;
+//    double rotationIncrementTotalDegrees = 0.0;
 
     //calculate conversion factors
     private final double encoderTicksPerDegrees = (rotationEncoderPulsesPerRevolution * rotationGearReduction)
@@ -47,10 +48,12 @@ public class Arm {
                                                 / (pulleyDiameterInches * Math.PI);
 
     //define preset positions of the arm.
-    public final static double collectionDegrees = 15.0;
+    public final static double clearBarrierDegrees = 35.0;
     public final static double scoreBucketDegrees = 75.0;
     public final static double hangExtendedDegrees = 120.0;
     public final static double hangClimbDegrees = 15.0;
+    public final static double collectionDegrees = 5.0;
+    public final static double restingDegrees = 5.0;
 
     private OpMode opmode;
 
@@ -89,7 +92,7 @@ public class Arm {
 
         //subtracts the right trigger value which is mapped onto a range of 0.0 to 0.7, making 0.3 the maximum speed
         //when it is completely held down
-        maxSpeedMultiplier = maxSpeed + ((-gamepad.right_trigger * (maxSpeed * 0.7)));
+        maxSpeedMultiplier = maxSpeed + ((-gamepad.right_trigger * (maxSpeed * 0.5)));
 
         //new method with a running total which holds the position of the viperslide
         viperslideIncrementTotalInches += -gamepad.left_stick_y * viperslideIncrementInches;
@@ -116,10 +119,14 @@ public class Arm {
         armRotationLeft.setTargetPosition(target);
         armRotationRight.setTargetPosition(target);
 
-        ((DcMotorEx) armRotationLeft).setVelocity(500);
-        ((DcMotorEx) armRotationRight).setVelocity(500);
+        ((DcMotorEx) armRotationLeft).setVelocity(1000);
+        ((DcMotorEx) armRotationRight).setVelocity(1000);
 
         armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
+
+//    public void controlArm(Gamepad gamepad) {
+//
+//    }
 }

@@ -10,11 +10,11 @@ public class Intake {
     private Servo wrist;
 
     //define preset degrees for the opening and closing of the claw
-    public static final double open = 30.0;
+    public static final double open = 1.0;
     public static final double close = 0.0;
 
     //define the resting position.
-    final double restingPos = 0.5;
+    final double wristRestingPos = 0.0;
 
     //constructor which acts as an initialization function for whenever an object of the class is created
     public Intake(HardwareMap hardwareMap){
@@ -23,21 +23,20 @@ public class Intake {
     }
 
     //sets the open or close mode of the claw
-    public void mode(double degrees) {
-        double servoTarget = degrees/300.0;
-        claw.setPosition(servoTarget);
+    public void mode(double servoPos) {
+        claw.setPosition(servoPos);
     }
 
     //lets the passed in gamepad control the wrist
     public void controlWrist(Gamepad gamepad) {
         //since restingPos is 0.5, max position to the left would be 0.5 + -0.5 resulting in zero and 0.5 + 0.5
         //would result in one
-        double servoTarget = (gamepad.right_stick_x * 0.5) + restingPos;
+        double servoTarget = (gamepad.right_stick_x * 0.5) + wristRestingPos;
         wrist.setPosition(servoTarget);
     }
 
     //returns the wrist to resting position
     public void setRestingPos() {
-        wrist.setPosition(restingPos);
+        wrist.setPosition(wristRestingPos);
     }
 }
