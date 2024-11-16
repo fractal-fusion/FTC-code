@@ -14,7 +14,7 @@ public class productionOpmode extends LinearOpMode {
         Intake intake = new Intake(this);
 
         //set intake to resting position on init
-        intake.setRestingPos();
+        intake.setHorizontalPos();
 
         //telemetry to show the robot is initialized
         telemetry.addLine("Robot Ready.");
@@ -51,9 +51,7 @@ public class productionOpmode extends LinearOpMode {
             else if (gamepad2.b) {
                 intake.mode(Intake.open);
             }
-            else if (gamepad2.x) {
-                intake.shouldToggle(gamepad2.x);
-            }
+
             //hanging control
             else if (gamepad2.dpad_left) {
                 arm.moveArm(Arm.hangExtendedDegrees);

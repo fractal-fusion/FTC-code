@@ -54,7 +54,7 @@ public class Arm {
     public final static double scoreBucketDegrees = 75.0;
     public final static double hangExtendedDegrees = 110.0;
     public final static double hangClimbDegrees = 15.0;
-    public final static double collectionDegrees = 5.0;
+    public final static double collectionDegrees = 2.0;
     public final static double restingDegrees = 10.0;
 
     private OpMode opMode;
