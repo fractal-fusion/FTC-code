@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -10,14 +11,16 @@ public class Drivetrain {
     private DcMotor backLeft;
     private DcMotor frontRight;
     private DcMotor backRight;
+    private OpMode opMode;
 
     //constructor which acts as an initialization function for whenever an object of the class is created
-    public Drivetrain(HardwareMap hardwareMap)
+    public Drivetrain(OpMode linearopmode)
     {
-        frontLeft = hardwareMap.get(DcMotor.class, "frontleft");
-        backLeft = hardwareMap.get(DcMotor.class, "backleft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontright");
-        backRight = hardwareMap.get(DcMotor.class, "backright");
+        this.opMode = linearopmode;
+        frontLeft = opMode.hardwareMap.get(DcMotor.class, "frontleft");
+        backLeft = opMode.hardwareMap.get(DcMotor.class, "backleft");
+        frontRight = opMode.hardwareMap.get(DcMotor.class, "frontright");
+        backRight = opMode.hardwareMap.get(DcMotor.class, "backright");
 
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);

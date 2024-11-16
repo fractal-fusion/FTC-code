@@ -9,9 +9,9 @@ public class productionOpmode extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         //initialize objects
-        Drivetrain drivetrain = new Drivetrain(hardwareMap);
+        Drivetrain drivetrain = new Drivetrain(this);
         Arm arm = new Arm(this);
-        Intake intake = new Intake(hardwareMap);
+        Intake intake = new Intake(this);
 
         //set intake to resting position on init
         intake.setRestingPos();
@@ -19,7 +19,11 @@ public class productionOpmode extends LinearOpMode {
         //telemetry to show the robot is initialized
         telemetry.addLine("Robot Ready.");
         telemetry.update();
+
+        //move subsystems to starting positions
         arm.moveArm(Arm.restingDegrees);
+        intake.mode(Intake.open);
+
         waitForStart();
 
         while (opModeIsActive())
@@ -47,6 +51,9 @@ public class productionOpmode extends LinearOpMode {
             }
             else if (gamepad2.b) {
                 intake.mode(Intake.open);
+            }
+            else if (gamepad2.x) {
+                intake.toggleWristPosition();
             }
             //hanging control
             else if (gamepad2.dpad_left) {

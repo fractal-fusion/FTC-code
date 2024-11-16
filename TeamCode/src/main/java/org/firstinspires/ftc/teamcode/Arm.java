@@ -55,15 +55,15 @@ public class Arm {
     public final static double collectionDegrees = 5.0;
     public final static double restingDegrees = 5.0;
 
-    private OpMode opmode;
+    private OpMode opMode;
 
     //constructor which acts as an initialization function for whenever an object of the class is created
-    public Arm(OpMode linearOpMode) {
-        this.opmode = linearOpMode;
-        armRotationLeft = opmode.hardwareMap.get(DcMotor.class, "armleft");
-        armRotationRight = opmode.hardwareMap.get(DcMotor.class, "armright");
-        viperslideLeft = opmode.hardwareMap.get(DcMotor.class, "viperleft");
-        viperslideRight = opmode.hardwareMap.get(DcMotor.class, "viperright");
+    public Arm(OpMode linearopmode) {
+        this.opMode = linearopmode;
+        armRotationLeft = opMode.hardwareMap.get(DcMotor.class, "armleft");
+        armRotationRight = opMode.hardwareMap.get(DcMotor.class, "armright");
+        viperslideLeft = opMode.hardwareMap.get(DcMotor.class, "viperleft");
+        viperslideRight = opMode.hardwareMap.get(DcMotor.class, "viperright");
 
         armRotationLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         armRotationRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -109,8 +109,9 @@ public class Arm {
         viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        opmode.telemetry.addData("viperslide target: ", target);
-        opmode.telemetry.update();
+        opMode.telemetry.addData("viperslide target: ", target);
+        opMode.telemetry.addData("viperslide inches: ", viperslideIncrementTotalInches);
+        opMode.telemetry.update();
     }
 
     //main function for controlling the position of the arm in degrees.
@@ -124,6 +125,9 @@ public class Arm {
 
         armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        opMode.telemetry.addData("arm degrees: ", degrees);
+        opMode.telemetry.addData("arm target: ", target);
     }
 
 //    public void controlArm(Gamepad gamepad) {
