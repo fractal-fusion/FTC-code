@@ -15,11 +15,11 @@ public class Intake {
 
     //define the two wrist positions position.
     final double wristHorizontalPos = 0.0;
-    final double wristVerticalPos = 0.25;
+    final double wristVerticalPos = 0.3;
 
     //wrist control
     double wristIncrementTotal = 0.0;
-    double wristIncrement = 0.005;
+    double wristIncrement = 0.05;
 
     private boolean wristHorizontal = true;
     private boolean lastButtonState = false;
@@ -55,19 +55,19 @@ public class Intake {
         double servoTarget = wristIncrementTotal;
         wrist.setPosition(servoTarget);
     }
-        public void toggleWristPosition(boolean buttonState) {
-            if (buttonState && !lastButtonState) {
-                if (wristHorizontal) {
-                    wrist.setPosition(wristVerticalPos);
-                    wristHorizontal = false;
-                }
-                else {
-                    wrist.setPosition(wristHorizontalPos);
-                    wristHorizontal = true;
-                }
-                lastButtonState = buttonState;
-            }
-        }
+//    public void toggleWristPosition(boolean buttonState) {
+//        if (buttonState && !lastButtonState) {
+//            if (wristHorizontal) {
+//                wrist.setPosition(wristVerticalPos);
+//                wristHorizontal = false;
+//            }
+//            else {
+//                wrist.setPosition(wristHorizontalPos);
+//                wristHorizontal = true;
+//            }
+//            lastButtonState = buttonState;
+//        }
+//    }
 
     //returns the wrist to resting position
     public void setHorizontalPos() {
