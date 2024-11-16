@@ -21,7 +21,6 @@ public class productionOpmode extends LinearOpMode {
         telemetry.update();
 
         //move subsystems to starting positions
-        arm.moveArm(Arm.restingDegrees);
         intake.mode(Intake.open);
 
         waitForStart();

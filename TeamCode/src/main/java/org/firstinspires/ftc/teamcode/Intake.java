@@ -10,14 +10,14 @@ public class Intake {
     private Servo wrist;
 
     //define preset degrees for the opening and closing of the claw
-    public static final double open = 0.5;
+    public static final double open = 0.25;
     public static final double close = 0.0;
 
     //define the resting position.
     final double wristVerticalPos = 0.0;
-    final double wristHorizontalPos = 0.75;
+    final double wristHorizontalPos = 0.3;
 
-    private boolean wristHorizontal = false;
+    private boolean wristHorizontal = true;
 
     private OpMode opMode;
 
@@ -42,13 +42,13 @@ public class Intake {
         wrist.setPosition(servoTarget);
     }
     public void toggleWristPosition() {
-        if (wristHorizontal) {
-            wrist.setPosition(wristVerticalPos);
-            wristHorizontal = false;
-        }
-        else if (!wristHorizontal) {
+        if (!wristHorizontal) {
             wrist.setPosition(wristHorizontalPos);
             wristHorizontal = true;
+        }
+        else if (wristHorizontal) {
+            wrist.setPosition(wristVerticalPos);
+            wristHorizontal = false;
         }
     }
 

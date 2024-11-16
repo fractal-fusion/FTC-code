@@ -54,7 +54,7 @@ public class Arm {
     public final static double scoreBucketDegrees = 75.0;
     public final static double hangExtendedDegrees = 120.0;
     public final static double hangClimbDegrees = 15.0;
-    public final static double collectionDegrees = 10.0;
+    public final static double collectionDegrees = 8.0;
     public final static double restingDegrees = 10.0;
 
     private OpMode opMode;
@@ -115,8 +115,11 @@ public class Arm {
         viperslideRight.setTargetPosition(target);
 
         //sets the power of the motors so that it moves the speed of how many inches per second specified, multiplied by the speed multiplier
-        ((DcMotorEx) viperslideLeft).setVelocity(encoderTicksPerInches * (viperslideSpeedInchesPerSecond * maxSpeedMultiplier));
-        ((DcMotorEx) viperslideRight).setVelocity(encoderTicksPerInches * (viperslideSpeedInchesPerSecond * maxSpeedMultiplier));
+//        ((DcMotorEx) viperslideLeft).setVelocity(encoderTicksPerInches * (viperslideSpeedInchesPerSecond * maxSpeedMultiplier));
+//        ((DcMotorEx) viperslideRight).setVelocity(encoderTicksPerInches * (viperslideSpeedInchesPerSecond * maxSpeedMultiplier));
+
+        viperslideLeft.setPower(1.0);
+        viperslideRight.setPower(1.0);
 
         viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
