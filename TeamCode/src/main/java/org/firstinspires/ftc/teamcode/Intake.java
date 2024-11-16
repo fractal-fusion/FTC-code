@@ -6,18 +6,17 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Intake {
     //declare the servos
-    private Servo claw;
-    private Servo wrist;
+    public Servo claw;
+    public Servo wrist;
 
     //define preset degrees for the opening and closing of the claw
     public static final double open = 0.25;
     public static final double close = 0.0;
 
     //define the resting position.
-    final double wristVerticalPos = 0.0;
-    final double wristHorizontalPos = 0.25;
-
-    private boolean wristHorizontal = true;
+    final double wristHorizontalPos = 0.0;
+    final double wristVerticalPos = 0.25;
+    private boolean lastState;
 
     private OpMode opMode;
 
@@ -38,22 +37,36 @@ public class Intake {
     public void controlWrist(Gamepad gamepad) {
         //since restingPos is 0.5, max position to the left would be 0.5 + -0.5 resulting in zero and 0.5 + 0.5
         //would result in one
-        double servoTarget = (gamepad.right_stick_x * 0.5) + wristVerticalPos;
+        double servoTarget = (gamepad.right_stick_x * 0.5);
         wrist.setPosition(servoTarget);
     }
-    public void toggleWristPosition(Gamepad gamepad) {
-        if (!wristHorizontal && gamepad.x) {
+
+    public void shouldToggle(boolean currentBtnState)
+    {
+        if(currentBtnState && !lastState) {
+            lastState = true;
+
             wrist.setPosition(wristHorizontalPos);
-            wristHorizontal= true;
         }
-        else if (wristHorizontal && gamepad.x) {
-            wrist.setPosition(wristVerticalPos);
-            wristHorizontal = false;
+        else if (!currentBtnState) {
+            lastState = false;
         }
+        wrist.setPosition(wristVerticalPos);
     }
+
+//    public void toggleWristPosition(Gamepad gamepad) {
+//        if (!wristHorizontal && gamepad.x) {
+//            wrist.setPosition(wristHorizontalPos);
+//            wristHorizontal= true;
+//        }
+//        else if (wristHorizontal && gamepad.x) {
+//            wrist.setPosition(wristVerticalPos);
+//            wristHorizontal = false;
+//        }
+//    }
 
     //returns the wrist to resting position
     public void setRestingPos() {
-        wrist.setPosition(wristVerticalPos);
+        wrist.setPosition(wristHorizontalPos);
     }
 }

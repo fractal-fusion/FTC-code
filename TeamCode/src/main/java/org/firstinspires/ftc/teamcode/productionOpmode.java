@@ -52,7 +52,7 @@ public class productionOpmode extends LinearOpMode {
                 intake.mode(Intake.open);
             }
             else if (gamepad2.x) {
-                intake.toggleWristPosition(gamepad2);
+                intake.shouldToggle(gamepad2.x);
             }
             //hanging control
             else if (gamepad2.dpad_left) {
