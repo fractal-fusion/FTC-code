@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Drivetrain {
     //declare motors
-    private DcMotor frontLeft;
-    private DcMotor backLeft;
-    private DcMotor frontRight;
-    private DcMotor backRight;
+    public DcMotor frontLeft;
+    public DcMotor backLeft;
+    public DcMotor frontRight;
+    public DcMotor backRight;
     private OpMode opMode;
 
     //constructor which acts as an initialization function for whenever an object of the class is created

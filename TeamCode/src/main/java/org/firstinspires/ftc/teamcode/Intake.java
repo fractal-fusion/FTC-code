@@ -15,7 +15,7 @@ public class Intake {
 
     //define the resting position.
     final double wristVerticalPos = 0.0;
-    final double wristHorizontalPos = 0.3;
+    final double wristHorizontalPos = 0.25;
 
     private boolean wristHorizontal = true;
 
@@ -41,12 +41,12 @@ public class Intake {
         double servoTarget = (gamepad.right_stick_x * 0.5) + wristVerticalPos;
         wrist.setPosition(servoTarget);
     }
-    public void toggleWristPosition() {
-        if (!wristHorizontal) {
+    public void toggleWristPosition(Gamepad gamepad) {
+        if (!wristHorizontal && gamepad.x) {
             wrist.setPosition(wristHorizontalPos);
-            wristHorizontal = true;
+            wristHorizontal= true;
         }
-        else if (wristHorizontal) {
+        else if (wristHorizontal && gamepad.x) {
             wrist.setPosition(wristVerticalPos);
             wristHorizontal = false;
         }
