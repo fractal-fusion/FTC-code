@@ -21,8 +21,9 @@ public class Intake {
     double wristIncrementTotal = 0.0;
     double wristIncrement = 0.05;
 
-    private boolean wristHorizontal = true;
-    private boolean lastButtonState = false;
+    //toggle booleans, useless because toggle doesn't work
+//    private boolean wristHorizontal = true;
+//    private boolean lastButtonState = false;
 
     private OpMode opMode;
 
