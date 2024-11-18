@@ -32,13 +32,20 @@ public class Arm {
     //viperslide constants used in extension
     private double viperslideMaxInches = 35.5;
     private final double viperslideSpeedInchesPerSecond = 8.5;
+
+    //the amount of inches or degrees to increment on each run of the opmode loop
     private final double viperslideIncrementInches = 0.1;
+    private final double rotationIncrementDegrees = 0.5;
+
     //Subtracted from the max inches of the viperslide to limit its extension
     private final double viperLimit = 5.0;
-    //running total of viperslide inches to hold the viper slide in place
+    //running total of viperslide inches and rotation degrees to hold them in place
     //when there are no joystick inputs
-    double viperslideIncrementTotalInches = 0.0;
-    double rotationAngle;
+    private double viperslideIncrementTotalInches = 0.0;
+    private double rotationIncrementTotalDegrees = 0.0;
+
+    //rotation angle variable
+    private double rotationAngle;
 
 //    private final double rotationIncrementDegrees = 0.5;
 //    double rotationIncrementTotalDegrees = 0.0;
@@ -88,14 +95,7 @@ public class Arm {
         //double extension_factor = clampDouble(gamepad.left_stick_y, 0.0, 1.0);
         // int target = (int) (extension_factor * (encoderTicksPerInches * (viperslideMaxInches - viperLimit) ));
 
-        //slow down viperslide extension using the right trigger
-        double maxSpeed = 1;
-        double maxSpeedMultiplier;
-
-        //subtracts the right trigger value which is mapped onto a range of 0.0 to 0.7, making 0.3 the maximum speed
-        //when it is completely held down
-        maxSpeedMultiplier = maxSpeed + ((-gamepad.right_trigger * (maxSpeed * 0.5)));
-
+        //mathematical software viperslide extension limitation attempt
 //        viperslideMaxInches = 42/Math.cos(rotationAngle);
 
         //restrict the horizontal extension
@@ -142,11 +142,26 @@ public class Arm {
 
         armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        opMode.telemetry.addData("arm degrees: ", rotationAngle);
-        opMode.telemetry.addData("arm target: ", target);
-        opMode.telemetry.update();
     }
+
+    // manual arm controls
+//    public void controlArm(Gamepad gamepad) {
+//        rotationIncrementTotalDegrees += rotationIncrementDegrees * (gamepad.left_trigger + -gamepad.right_trigger);
+//        rotationIncrementTotalDegrees = clampDouble(rotationIncrementTotalDegrees, 0.0, 110.0);
+//        int target = (int) (rotationIncrementTotalDegrees * encoderTicksPerDegrees);
+//        armRotationLeft.setTargetPosition(target);
+//        armRotationRight.setTargetPosition(target);
+//
+//        ((DcMotorEx) armRotationLeft).setVelocity(2100);
+//        ((DcMotorEx) armRotationRight).setVelocity(2100);
+//
+//        armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//
+//        opMode.telemetry.addData("arm degrees: ", rotationAngle);
+//        opMode.telemetry.addData("arm target: ", target);
+//        opMode.telemetry.update();
+//    }
 
 //    public void controlArm(Gamepad gamepad) {
 //

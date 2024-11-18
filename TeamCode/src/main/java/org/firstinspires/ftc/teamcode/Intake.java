@@ -10,7 +10,7 @@ public class Intake {
     public Servo wrist;
 
     //define preset degrees for the opening and closing of the claw
-    public static final double open = 0.25;
+    public static final double open = 1.0;
     public static final double close = 0.0;
 
     //define the two wrist positions position.
