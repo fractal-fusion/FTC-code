@@ -52,4 +52,31 @@ public class Drivetrain {
         frontRight.setPower(frontRightPower * maxSpeedMultiplier);
         backRight.setPower(backRightPower * maxSpeedMultiplier);
     }
-}
+    public void forward() {
+            frontRight.setPower(1);
+            backRight.setPower(1);
+            frontLeft.setPower(1);
+            backLeft.setPower(1);
+        }
+    public void backward(){
+            frontRight.setPower(-1);
+            backRight.setPower(-1);
+            frontLeft.setPower(-1);
+            backLeft.setPower(-1);
+        }
+    public void LeftStrafe(int direction) {
+        frontRight.setPower(1);
+        backRight.setPower(-1);
+        frontLeft.setPower(1);
+        backLeft.setPower(-1);
+    }
+    public void RightStrafe(int direction){
+        frontRight.setPower(1);
+        backRight.setPower(-1);
+        frontLeft.setPower(1);
+        backLeft.setPower(-1);
+        }
+    }
+
+
+
