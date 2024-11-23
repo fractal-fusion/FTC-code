@@ -130,6 +130,19 @@ public class Arm {
         opMode.telemetry.update();
     }
 
+    public void moveViperslides(double inches) {
+        int target = (int) (inches * encoderTicksPerInches);
+
+        viperslideLeft.setTargetPosition(target);
+        viperslideRight.setTargetPosition(target);
+
+        viperslideLeft.setPower(1.0);
+        viperslideRight.setPower(1.0);
+
+        viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
     //main function for controlling the position of the arm in degrees.
     public void moveArm(double degrees) {
         rotationAngle = degrees;
