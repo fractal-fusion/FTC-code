@@ -16,7 +16,7 @@ public class autoRight extends LinearOpMode {
         //grab sample
         intake.mode(Intake.close);
 
-        //move to the bucket (unfinished)
+        //move to the bucket (untested)
         drivetrain.frontLeft.setPower(1);
         drivetrain.frontRight.setPower(1);
         drivetrain.backLeft.setPower(1);
@@ -50,19 +50,28 @@ public class autoRight extends LinearOpMode {
 
 
 
-        //rotate arm
-//        arm.moveArm(75);
-//        arm.moveViperslides(34);
-//        sleep(7000);
-//        intake.mode(Intake.open);
-//        drivetrain.frontLeft.setPower(-1);
-//        drivetrain.frontRight.setPower(-1);
-//        drivetrain.backLeft.setPower(-1);
-//        drivetrain.backRight.setPower(-1);
-//        sleep(200);
-//        arm.moveViperslides(0);
-//        sleep(7000);
-//        arm.moveArm(10);
-//        sleep(2000);
+        //rotate arm and Score Sample(untested)
+        arm.moveArm(75);
+        sleep(100)
+        arm.moveViperslides(34);
+        sleep(6000);
+        intake.mode(Intake.open);
+        sleep(100)
+        drivetrain.frontLeft.setPower(-1);
+        drivetrain.frontRight.setPower(-1);
+        drivetrain.backLeft.setPower(-1);
+        drivetrain.backRight.setPower(-1);
+        sleep(50);
+        arm.moveViperslides(0);
+        sleep(6000);
+        arm.moveArm(5);
+        sleep(2000);
+        
+
+
+        //pick up the rightmost sample from drive team perspective(untested)
+        
+        
+        
     }
 }
