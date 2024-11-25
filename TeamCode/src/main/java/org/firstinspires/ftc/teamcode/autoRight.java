@@ -52,11 +52,11 @@ public class autoRight extends LinearOpMode {
 
         //rotate arm and Score Sample(untested)
         arm.moveArm(75);
-        sleep(100)
+        sleep(100);
         arm.moveViperslides(34);
         sleep(6000);
         intake.mode(Intake.open);
-        sleep(100)
+        sleep(100);
         drivetrain.frontLeft.setPower(-1);
         drivetrain.frontRight.setPower(-1);
         drivetrain.backLeft.setPower(-1);
