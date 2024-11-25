@@ -9,6 +9,13 @@ public class Intake {
     public Servo claw;
     public Servo wrist;
 
+    //gamepads for rising edge detection to add debounce
+    private Gamepad currentGamepad;
+    private Gamepad previousGamepad;
+
+    //boolean for the toggling of the claw
+    private boolean clawIsOpen = true;
+
     //define preset degrees for the opening and closing of the claw
     public static final double open = 1.0;
     public static final double close = 0.0;
@@ -20,10 +27,6 @@ public class Intake {
     //wrist control
     double wristIncrementTotal = 0.0;
     double wristIncrement = 0.05;
-
-    //toggle booleans, useless because toggle doesn't work
-//    private boolean wristHorizontal = true;
-//    private boolean lastButtonState = false;
 
     private OpMode opMode;
 
@@ -45,6 +48,27 @@ public class Intake {
         opMode.telemetry.addData("claw position", servoPos);
     }
 
+    public void toggleClaw(Gamepad gamepad) {
+        //copy the correct previous and current gamepad values in order for the debounce to work
+        previousGamepad.copy(currentGamepad);
+        currentGamepad.copy(gamepad);
+
+        //toggle the clawisopen boolean
+        if (currentGamepad.b && !previousGamepad.b) {
+            clawIsOpen = !clawIsOpen;
+        }
+
+
+        //control the claw based on the boolean
+        if (clawIsOpen) {
+            claw.setPosition(open);
+        }
+        else {
+            claw.setPosition(close);
+        }
+
+    }
+
     //lets the passed in gamepad control the wrist
     public void controlWrist(Gamepad gamepad) {
         //since restingPos is 0.5, max position to the left would be 0.5 + -0.5 resulting in zero and 0.5 + 0.5
@@ -56,19 +80,6 @@ public class Intake {
         double servoTarget = wristIncrementTotal;
         wrist.setPosition(servoTarget);
     }
-//    public void toggleWristPosition(boolean buttonState) {
-//        if (buttonState && !lastButtonState) {
-//            if (wristHorizontal) {
-//                wrist.setPosition(wristVerticalPos);
-//                wristHorizontal = false;
-//            }
-//            else {
-//                wrist.setPosition(wristHorizontalPos);
-//                wristHorizontal = true;
-//            }
-//            lastButtonState = buttonState;
-//        }
-//    }
 
     //returns the wrist to resting position
     public void setHorizontalPos() {
