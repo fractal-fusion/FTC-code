@@ -31,7 +31,7 @@ public class autoRight extends LinearOpMode {
         drivetrain.frontRight.setPower(1);
         drivetrain.backLeft.setPower(1);
         drivetrain.backRight.setPower(-1);
-        sleep(1500);
+        sleep(300);
         drivetrain.frontLeft.setPower(0);
         drivetrain.frontRight.setPower(0);
         drivetrain.backLeft.setPower(0);
@@ -61,17 +61,32 @@ public class autoRight extends LinearOpMode {
         drivetrain.frontRight.setPower(-1);
         drivetrain.backLeft.setPower(-1);
         drivetrain.backRight.setPower(-1);
-        sleep(50);
+        sleep(80);
         arm.moveViperslides(0);
         sleep(6000);
-        arm.moveArm(5);
+        arm.moveArm(15);
         sleep(2000);
         
 
 
         //pick up the rightmost sample from drive team perspective(untested)
-        
-        
-        
+        drivetrain.frontLeft.setPower(1);
+        drivetrain.frontRight.setPower(-1);
+        drivetrain.backLeft.setPower(1);
+        drivetrain.backRight.setPower(-1);
+        sleep(120);
+        drivetrain.frontLeft.setPower(0);
+        drivetrain.frontRight.setPower(0);
+        drivetrain.backLeft.setPower(0);
+        drivetrain.backRight.setPower(0);
+        sleep(10);
+        drivetrain.frontLeft.setPower(1);
+        drivetrain.frontRight.setPower(-1);
+        drivetrain.backLeft.setPower(-1);
+        drivetrain.backRight.setPower(1);
+        sleep(80);
+        arm.moveArm(5);
+        sleep(500)
+        intake.mode(Intake.close);
     }
 }
