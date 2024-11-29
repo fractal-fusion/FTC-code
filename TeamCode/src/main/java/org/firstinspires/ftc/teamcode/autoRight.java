@@ -85,8 +85,13 @@ public class autoRight extends LinearOpMode {
         drivetrain.backLeft.setPower(-1);
         drivetrain.backRight.setPower(1);
         sleep(80);
+        drivetrain.frontLeft.setPower(0);
+        drivetrain.frontRight.setPower(0);
+        drivetrain.backLeft.setPower(0);
+        drivetrain.backRight.setPower(0);
+        sleep(10);
         arm.moveArm(5);
-        sleep(500)
+        sleep(500);
         intake.mode(Intake.close);
     }
 }
