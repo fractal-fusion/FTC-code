@@ -12,86 +12,99 @@ public class autoRight extends LinearOpMode {
         Intake intake = new Intake(this);
         Arm arm = new Arm(this);
 
+        waitForStart();
 
         //grab sample
         intake.mode(Intake.close);
 
         //move to the bucket (untested)
+        //forward
         drivetrain.frontLeft.setPower(1);
         drivetrain.frontRight.setPower(1);
         drivetrain.backLeft.setPower(1);
         drivetrain.backRight.setPower(1);
-        sleep(200);
+        sleep(160);
         drivetrain.frontLeft.setPower(0);
         drivetrain.frontRight.setPower(0);
         drivetrain.backLeft.setPower(0);
         drivetrain.backRight.setPower(0);
         sleep(10);
+        //strafe left
         drivetrain.frontLeft.setPower(-1);
         drivetrain.frontRight.setPower(1);
         drivetrain.backLeft.setPower(1);
         drivetrain.backRight.setPower(-1);
-        sleep(300);
+        sleep(400);
+        drivetrain.frontLeft.setPower(0);
+        drivetrain.frontRight.setPower(0);
+        drivetrain.backLeft.setPower(0);
+        drivetrain.backRight.setPower(0);
+        sleep(100);
+        //rotate left
+        drivetrain.frontLeft.setPower(-0.8);
+        drivetrain.frontRight.setPower(0.8);
+        drivetrain.backLeft.setPower(-0.8);
+        drivetrain.backRight.setPower(0.8);
+        sleep(490);
         drivetrain.frontLeft.setPower(0);
         drivetrain.frontRight.setPower(0);
         drivetrain.backLeft.setPower(0);
         drivetrain.backRight.setPower(0);
         sleep(10);
-        drivetrain.frontLeft.setPower(-1);
+        //move forward
+        drivetrain.frontLeft.setPower(1);
         drivetrain.frontRight.setPower(1);
-        drivetrain.backLeft.setPower(-1);
+        drivetrain.backLeft.setPower(1);
         drivetrain.backRight.setPower(1);
-        sleep(100);
+        sleep(20);
         drivetrain.frontLeft.setPower(0);
         drivetrain.frontRight.setPower(0);
         drivetrain.backLeft.setPower(0);
         drivetrain.backRight.setPower(0);
-        sleep(100);
-
-
-
-        //rotate arm and Score Sample(untested)
-        arm.moveArm(75);
-        sleep(100);
+        //rotate viper slides
+        arm.moveArm(Arm.scoreBucketDegrees);
+        sleep(5000);
+        //extend slides
         arm.moveViperslides(34);
         sleep(6000);
         intake.mode(Intake.open);
         sleep(100);
-        drivetrain.frontLeft.setPower(-1);
-        drivetrain.frontRight.setPower(-1);
-        drivetrain.backLeft.setPower(-1);
-        drivetrain.backRight.setPower(-1);
-        sleep(80);
+        //drivetrain.frontLeft.setPower(-1);
+//        drivetrain.frontRight.setPower(-1);
+////        drivetrain.backLeft.setPower(-1);
+////        drivetrain.backRight.setPower(-1);
+////        sleep(80);
         arm.moveViperslides(0);
-        sleep(6000);
-        arm.moveArm(15);
-        sleep(2000);
-        
+////        sleep(6000);
+////        arm.moveArm(15);
+////        sleep(2000);
+
 
 
         //pick up the rightmost sample from drive team perspective(untested)
-        drivetrain.frontLeft.setPower(1);
-        drivetrain.frontRight.setPower(-1);
-        drivetrain.backLeft.setPower(1);
-        drivetrain.backRight.setPower(-1);
-        sleep(120);
-        drivetrain.frontLeft.setPower(0);
-        drivetrain.frontRight.setPower(0);
-        drivetrain.backLeft.setPower(0);
-        drivetrain.backRight.setPower(0);
-        sleep(10);
-        drivetrain.frontLeft.setPower(1);
-        drivetrain.frontRight.setPower(-1);
-        drivetrain.backLeft.setPower(-1);
-        drivetrain.backRight.setPower(1);
-        sleep(80);
-        drivetrain.frontLeft.setPower(0);
-        drivetrain.frontRight.setPower(0);
-        drivetrain.backLeft.setPower(0);
-        drivetrain.backRight.setPower(0);
-        sleep(10);
-        arm.moveArm(5);
-        sleep(500);
-        intake.mode(Intake.close);
+//        drivetrain.frontLeft.setPower(1);
+//        drivetrain.frontRight.setPower(-1);
+//        drivetrain.backLeft.setPower(1);
+//        drivetrain.backRight.setPower(-1);
+//        sleep(120);
+//        drivetrain.frontLeft.setPower(0);
+//        drivetrain.frontRight.setPower(0);
+//        drivetrain.backLeft.setPower(0);
+//        drivetrain.backRight.setPower(0);
+//        sleep(10);
+//        drivetrain.frontLeft.setPower(1);
+//        drivetrain.frontRight.setPower(-1);
+//        drivetrain.backLeft.setPower(-1);
+//        drivetrain.backRight.setPower(1);
+//        sleep(80);
+//        drivetrain.frontLeft.setPower(0);
+//        drivetrain.frontRight.setPower(0);
+//        drivetrain.backLeft.setPower(0);
+//        drivetrain.backRight.setPower(0);
+//        sleep(10);
+//        arm.moveArm(4);
+//        sleep(500);
+//        intake.mode(Intake.close);
+
     }
-}
+};

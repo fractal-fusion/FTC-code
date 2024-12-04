@@ -17,7 +17,7 @@ public class Intake {
     private boolean clawIsOpen = true;
 
     //define preset degrees for the opening and closing of the claw
-    public static final double open = 1.0;
+    public static final double open = 0.55;
     public static final double close = 0.0;
 
     //define the two wrist positions position.
@@ -54,10 +54,9 @@ public class Intake {
         currentGamepad.copy(gamepad);
 
         //toggle the clawisopen boolean
-        if (currentGamepad.b && !previousGamepad.b) {
+        if (currentGamepad.a && !previousGamepad.a) {
             clawIsOpen = !clawIsOpen;
         }
-
 
         //control the claw based on the boolean
         if (clawIsOpen) {
