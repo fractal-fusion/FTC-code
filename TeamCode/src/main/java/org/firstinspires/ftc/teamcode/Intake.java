@@ -10,14 +10,14 @@ public class Intake {
     public Servo wrist;
 
     //gamepads for rising edge detection to add debounce
-    private Gamepad currentGamepad;
-    private Gamepad previousGamepad;
+    private Gamepad currentGamepad = new Gamepad();
+    private Gamepad previousGamepad = new Gamepad();
 
     //boolean for the toggling of the claw
     private boolean clawIsOpen = true;
 
     //define preset degrees for the opening and closing of the claw
-    public static final double open = 0.55;
+    public static final double open = 0.25;
     public static final double close = 0.0;
 
     //define the two wrist positions position.

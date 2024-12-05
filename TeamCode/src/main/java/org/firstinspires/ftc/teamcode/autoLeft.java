@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Right Auto", group="Robot")
-public class autoRight extends LinearOpMode {
+@Autonomous(name="Left Side Auto", group="Robot")
+public class autoLeft extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -16,7 +16,7 @@ public class autoRight extends LinearOpMode {
 
         //grab sample
         intake.mode(Intake.close);
-
+        sleep(1000);
 
         //move to the bucket (untested)
         //forward
@@ -64,19 +64,29 @@ public class autoRight extends LinearOpMode {
         drivetrain.backRight.setPower(0);
         //rotate viper slides
         arm.moveArm(Arm.scoreBucketDegrees);
-        sleep(5000);
+        sleep(2000);
         //extend slides
         arm.moveViperslides(34);
         sleep(3000);
         intake.mode(Intake.open);
-        sleep(100);
+        sleep(1000);
         arm.moveViperslides(0);
-        sleep(3000);
-        drivetrain.frontLeft.setPower(-1);
-        drivetrain.frontRight.setPower(-1);
-        drivetrain.backLeft.setPower(-1);
-        drivetrain.backRight.setPower(-1);
-        sleep(100);
+        sleep(2000);
+        drivetrain.frontLeft.setPower(0.8);
+        drivetrain.frontRight.setPower(-0.8);
+        drivetrain.backLeft.setPower(0.8);
+        drivetrain.backRight.setPower(-0.8);
+        sleep(555);
+        drivetrain.frontLeft.setPower(0);
+        drivetrain.frontRight.setPower(0);
+        drivetrain.backLeft.setPower(0);
+        drivetrain.backRight.setPower(0);
+        sleep(20);
+        drivetrain.frontLeft.setPower(1);
+        drivetrain.frontRight.setPower(1);
+        drivetrain.backLeft.setPower(1);
+        drivetrain.backRight.setPower(1);
+        sleep(200);
         drivetrain.frontLeft.setPower(0);
         drivetrain.frontRight.setPower(0);
         drivetrain.backLeft.setPower(0);
@@ -84,6 +94,9 @@ public class autoRight extends LinearOpMode {
         sleep(20);
         arm.moveArm(Arm.collectionDegrees);
         sleep(2000);
+
+
+
 
 ////        sleep(6000);
 ////        arm.moveArm(15);
