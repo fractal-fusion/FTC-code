@@ -15,10 +15,12 @@ public class autoLeft extends LinearOpMode {
         waitForStart();
 
         //grab sample
-        intake.mode(Intake.close);
-        sleep(1000);
+        //intake.mode(Intake.close);
+        //sleep(1500);
+        arm.moveArm(Arm.collectionDegrees);
+        sleep(2000);
 
-        //move to the bucket (untested)
+        //move to the bucket (tested)
         //forward
         drivetrain.frontLeft.setPower(1);
         drivetrain.frontRight.setPower(1);
@@ -68,10 +70,12 @@ public class autoLeft extends LinearOpMode {
         //extend slides
         arm.moveViperslides(34);
         sleep(3000);
-        intake.mode(Intake.open);
-        sleep(1000);
+        //intake.mode(Intake.open);
+        //sleep(1000);
+        //de-extend slides
         arm.moveViperslides(0);
         sleep(2000);
+        //rotate right
         drivetrain.frontLeft.setPower(0.8);
         drivetrain.frontRight.setPower(-0.8);
         drivetrain.backLeft.setPower(0.8);
@@ -82,6 +86,17 @@ public class autoLeft extends LinearOpMode {
         drivetrain.backLeft.setPower(0);
         drivetrain.backRight.setPower(0);
         sleep(20);
+        drivetrain.frontLeft.setPower(0.8);
+        drivetrain.frontRight.setPower(-0.8);
+        drivetrain.backLeft.setPower(0.8);
+        drivetrain.backRight.setPower(-0.8);
+        sleep(100);
+        drivetrain.frontLeft.setPower(0);
+        drivetrain.frontRight.setPower(0);
+        drivetrain.backLeft.setPower(0);
+        drivetrain.backRight.setPower(0);
+        sleep(30);
+        //go forward towards sample
         drivetrain.frontLeft.setPower(1);
         drivetrain.frontRight.setPower(1);
         drivetrain.backLeft.setPower(1);
@@ -92,8 +107,19 @@ public class autoLeft extends LinearOpMode {
         drivetrain.backLeft.setPower(0);
         drivetrain.backRight.setPower(0);
         sleep(20);
+        //untested
         arm.moveArm(Arm.collectionDegrees);
         sleep(2000);
+        drivetrain.frontLeft.setPower(-0.8);
+        drivetrain.frontRight.setPower(0.8);
+        drivetrain.backLeft.setPower(-0.8);
+        drivetrain.backRight.setPower(0.8);
+        sleep(200);
+        drivetrain.frontLeft.setPower(0);
+        drivetrain.frontRight.setPower(0);
+        drivetrain.backLeft.setPower(0);
+        drivetrain.backRight.setPower(0);
+        sleep(50);
 
 
 
