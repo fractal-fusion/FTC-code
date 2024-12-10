@@ -119,7 +119,7 @@ public class autoLeft extends LinearOpMode {
         drivetrain.frontRight.setPower(0);
         drivetrain.backLeft.setPower(0);
         drivetrain.backRight.setPower(0);
-        sleep(50);
+        sleep(10);
 
 
 
