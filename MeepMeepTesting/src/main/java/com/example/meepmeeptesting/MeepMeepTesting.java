@@ -9,7 +9,7 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 public class MeepMeepTesting {
 
     public static void main(String[] args) {
-        double tilelength = 23.5;
+        double tilelength = 24;
 
         MeepMeep meepMeep = new MeepMeep(700);
 
@@ -18,7 +18,7 @@ public class MeepMeepTesting {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-tilelength, -61, Math.toRadians(90)))
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-tilelength, -65, Math.toRadians(90)))
                 //TODO: close claw to grab sample
                 //move to bucket
                 .splineTo(new Vector2d(-52.5,-52.5), Math.toRadians(225))
@@ -55,17 +55,10 @@ public class MeepMeepTesting {
                 //park
                 .strafeTo(new Vector2d(-28,0))
                 .turnTo(Math.toRadians(0))
-//                .lineToY(-55)
-//                .turn(Math.toRadians(90))
-//                .lineToX(-50)
-//                .turn(Math.toRadians(45))
-//                .turn(Math.toRadians(-135))
-//                .lineToY(-35)
-                //.linetoY
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
-                .setDarkMode(true)
+                .setDarkMode(false)
                 .setBackgroundAlpha(0.95f)
                 .addEntity(myBot)
                 .start();

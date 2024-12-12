@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Left Side Auto", group="Robot")
-public class autoLeft extends LinearOpMode {
+@Autonomous(name="Left Side Auto Macro", group="Robot")
+public class autoLeftMacro extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
