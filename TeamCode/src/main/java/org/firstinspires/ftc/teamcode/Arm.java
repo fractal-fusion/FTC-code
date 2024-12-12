@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -156,6 +160,55 @@ public class Arm {
         armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
+
+    //MAY OR MAY NOT WORK
+    public Action moveArmToBucketDegrees() {
+        return new Action() {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    int target = (int) (75 * encoderTicksPerDegrees);
+
+                    armRotationLeft.setTargetPosition(target);
+                    armRotationRight.setTargetPosition(target);
+
+                    armRotationLeft.setPower(0.7);
+                    armRotationRight.setPower(0.7);
+
+                    packet.put("armposition", armRotationLeft.getCurrentPosition());
+                    armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    initialized = true;
+                }
+                return initialized;
+            }
+        };
+    }
+
+    //SECOND IMPLEMENTATION TO BE SAFE
+//    public Action moveArmToBucketDegrees() {
+//        return new Action() {
+//            private boolean initialized = false;
+//
+//            @Override
+//            public boolean run(@NonNull TelemetryPacket packet) {
+//                if (!initialized) {
+//                    armRotationLeft.setPower(0.7);
+//                    armRotationRight.setPower(0.7);
+//                    initialized = true;
+//                }
+//
+//                if (armRotationLeft.getCurrentPosition() < 2076) {
+//                    packet.put("armposition", armRotationLeft.getCurrentPosition());
+//                    return false;
+//                }
+//                return true;
+//            }
+//        };
+//    }
 
     // manual arm controls
 //    public void controlArm(Gamepad gamepad) {

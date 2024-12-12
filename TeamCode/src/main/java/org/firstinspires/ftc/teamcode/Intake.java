@@ -1,6 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -84,4 +89,37 @@ public class Intake {
     public void setHorizontalPos() {
         wrist.setPosition(wristHorizontalPos);
     }
+
+    //roadrunner actions
+
+    public Action closeClaw() {
+        return new Action() {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    claw.setPosition(Intake.close);
+                    initialized = true;
+                }
+                return initialized;
+            }
+        };
+    }
+
+    public Action openClaw() {
+        return new Action() {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    claw.setPosition(Intake.open);
+                    initialized = true;
+                }
+                return initialized;
+            }
+        };
+    }
+
 }
