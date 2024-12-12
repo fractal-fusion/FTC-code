@@ -154,14 +154,14 @@ public class Arm {
         armRotationLeft.setTargetPosition(target);
         armRotationRight.setTargetPosition(target);
 
-        armRotationLeft.setPower(0.7);
-        armRotationRight.setPower(0.7);
+        armRotationLeft.setPower(0.9);
+        armRotationRight.setPower(0.9);
 
         armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    //MAY OR MAY NOT WORK
+    // -----------------------------ROADRUNNER ACTIONS ------------------------------------
     public Action moveArmToBucketDegrees() {
         return new Action() {
             private boolean initialized = false;
@@ -169,7 +169,7 @@ public class Arm {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    int target = (int) (75 * encoderTicksPerDegrees);
+                    int target = (int) (Arm.scoreBucketDegrees * encoderTicksPerDegrees);
 
                     armRotationLeft.setTargetPosition(target);
                     armRotationRight.setTargetPosition(target);
@@ -177,18 +177,124 @@ public class Arm {
                     armRotationLeft.setPower(0.7);
                     armRotationRight.setPower(0.7);
 
-                    packet.put("armposition", armRotationLeft.getCurrentPosition());
                     armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
                     initialized = true;
                 }
-                return initialized;
+                if (armRotationLeft.getCurrentPosition() < 2076) {
+                    packet.put("armposition", armRotationLeft.getCurrentPosition());
+                    return true;
+                }
+                else {
+                    armRotationLeft.setPower(0);
+                    armRotationRight.setPower(0);
+                    return false;
+                }
             }
         };
     }
 
-    //SECOND IMPLEMENTATION TO BE SAFE
+    public Action moveArmToCollectionDegrees() {
+        return new Action() {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    int target = (int) (Arm.collectionDegrees * encoderTicksPerDegrees);
+
+                    armRotationLeft.setTargetPosition(target);
+                    armRotationRight.setTargetPosition(target);
+
+                    armRotationLeft.setPower(0.7);
+                    armRotationRight.setPower(0.7);
+
+                    armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    initialized = true;
+                }
+                if (armRotationLeft.getCurrentPosition() < 110) {
+                    packet.put("armposition", armRotationLeft.getCurrentPosition());
+                    return true;
+                }
+                else {
+                    armRotationLeft.setPower(0);
+                    armRotationRight.setPower(0);
+                    return false;
+                }
+            }
+        };
+    }
+
+    public Action extendViperslides() {
+        return new Action() {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    int target = (int) (viperslideMaxInches * encoderTicksPerInches);
+
+                    viperslideLeft.setTargetPosition(target);
+                    viperslideRight.setTargetPosition(target);
+
+                    viperslideLeft.setPower(1);
+                    viperslideRight.setPower(1);
+
+                    viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    initialized = true;
+                }
+                if (viperslideLeft.getCurrentPosition() < 4263) {
+                    packet.put("viperslidepos", viperslideLeft.getCurrentPosition());
+                    return true;
+                }
+                else {
+                    viperslideLeft.setPower(0);
+                    viperslideRight.setPower(0);
+                    return false;
+                }
+            }
+        };
+    }
+
+    public Action retractViperslides() {
+        return new Action() {
+            private boolean initialized = false;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    int target = 0;
+
+                    viperslideLeft.setTargetPosition(target);
+                    viperslideRight.setTargetPosition(target);
+
+                    viperslideLeft.setPower(1);
+                    viperslideRight.setPower(1);
+
+                    viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    initialized = true;
+                }
+                if (viperslideLeft.getCurrentPosition() > 0) {
+                    packet.put("viperslidepos", viperslideLeft.getCurrentPosition());
+                    return true;
+                }
+                else {
+                    viperslideLeft.setPower(0);
+                    viperslideRight.setPower(0);
+                    return false;
+                }
+            }
+        };
+    }
+
+    //SECOND IMPLEMENTATION, bang bang control
 //    public Action moveArmToBucketDegrees() {
 //        return new Action() {
 //            private boolean initialized = false;
@@ -203,9 +309,9 @@ public class Arm {
 //
 //                if (armRotationLeft.getCurrentPosition() < 2076) {
 //                    packet.put("armposition", armRotationLeft.getCurrentPosition());
-//                    return false;
+//                    return true;
 //                }
-//                return true;
+//                return false;
 //            }
 //        };
 //    }
