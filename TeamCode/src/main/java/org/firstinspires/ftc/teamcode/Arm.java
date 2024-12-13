@@ -187,8 +187,6 @@ public class Arm {
                     return true;
                 }
                 else {
-                    armRotationLeft.setPower(0);
-                    armRotationRight.setPower(0);
                     return false;
                 }
             }
@@ -220,8 +218,6 @@ public class Arm {
                     return true;
                 }
                 else {
-                    armRotationLeft.setPower(0);
-                    armRotationRight.setPower(0);
                     return false;
                 }
             }
@@ -253,8 +249,6 @@ public class Arm {
                     return true;
                 }
                 else {
-                    viperslideLeft.setPower(0);
-                    viperslideRight.setPower(0);
                     return false;
                 }
             }
@@ -286,8 +280,6 @@ public class Arm {
                     return true;
                 }
                 else {
-                    viperslideLeft.setPower(0);
-                    viperslideRight.setPower(0);
                     return false;
                 }
             }
@@ -316,24 +308,24 @@ public class Arm {
 //        };
 //    }
 
-    // manual arm controls
-//    public void controlArm(Gamepad gamepad) {
-//        rotationIncrementTotalDegrees += rotationIncrementDegrees * (gamepad.left_trigger + -gamepad.right_trigger);
-//        rotationIncrementTotalDegrees = clampDouble(rotationIncrementTotalDegrees, 0.0, 110.0);
-//        int target = (int) (rotationIncrementTotalDegrees * encoderTicksPerDegrees);
-//        armRotationLeft.setTargetPosition(target);
-//        armRotationRight.setTargetPosition(target);
-//
-//        ((DcMotorEx) armRotationLeft).setVelocity(2100);
-//        ((DcMotorEx) armRotationRight).setVelocity(2100);
-//
-//        armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//
-//        opMode.telemetry.addData("arm degrees: ", rotationAngle);
-//        opMode.telemetry.addData("arm target: ", target);
-//        opMode.telemetry.update();
-//    }
+    //manual arm controls
+    public void controlArm(Gamepad gamepad) {
+        rotationIncrementTotalDegrees += rotationIncrementDegrees * (gamepad.left_trigger + -gamepad.right_trigger);
+        rotationIncrementTotalDegrees = clampDouble(rotationIncrementTotalDegrees, 0.0, 110.0);
+        int target = (int) (rotationIncrementTotalDegrees * encoderTicksPerDegrees);
+        armRotationLeft.setTargetPosition(target);
+        armRotationRight.setTargetPosition(target);
+
+        ((DcMotorEx) armRotationLeft).setVelocity(2100);
+        ((DcMotorEx) armRotationRight).setVelocity(2100);
+
+        armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        opMode.telemetry.addData("arm degrees: ", rotationAngle);
+        opMode.telemetry.addData("arm target: ", target);
+        opMode.telemetry.update();
+    }
 
 //    public void controlArm(Gamepad gamepad) {
 //
