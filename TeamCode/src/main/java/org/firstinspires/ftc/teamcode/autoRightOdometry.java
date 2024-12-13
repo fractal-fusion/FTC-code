@@ -50,7 +50,7 @@ public class autoRightOdometry extends LinearOpMode {
                 .build();
         Action hang3rdSpec = drive.actionBuilder(initialPose)
                 .strafeToLinearHeading(new Vector2d(6,-34), Math.toRadians(90))
-                .build()
+                .build();
         Action park=drive.actionBuilder(initialPose)
                 .strafeTo(new Vector2d(36,-60))
                 .build();
