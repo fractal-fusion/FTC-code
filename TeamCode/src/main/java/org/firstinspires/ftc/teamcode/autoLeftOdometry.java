@@ -20,7 +20,7 @@ public class autoLeftOdometry extends LinearOpMode {
         Arm arm = new Arm(this);
 
         //initialize beginning pose and mecanum drive object
-        Pose2d initialPose = new Pose2d(-tilelength, -65, Math.toRadians(90));
+        Pose2d initialPose = new Pose2d(-tilelength, -62, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
         //pre-build trajectories during initialization
@@ -38,8 +38,8 @@ public class autoLeftOdometry extends LinearOpMode {
         //pickup a sample
         Actions.runBlocking(
                 new SequentialAction(
-                        intake.closeClaw(),
-                        arm.moveArmToCollectionDegrees()
+                        arm.moveArmToCollectionDegrees(),
+                        intake.closeClaw()
                 ));
 
         waitForStart();
