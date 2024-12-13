@@ -65,7 +65,7 @@ public class autoLeftMacro extends LinearOpMode {
         drivetrain.backLeft.setPower(0);
         drivetrain.backRight.setPower(0);
         //rotate viper slides
-        arm.moveArm(Arm.scoreBucketDegrees);
+        arm.moveArm(Arm.scoreDegrees);
         sleep(2000);
         //extend slides
         arm.moveViperslides(34);
