@@ -65,7 +65,7 @@ public class Arm {
     public final static double scoreDegrees = 72.0;
     public final static double hangExtendedDegrees = 110.0;
     public final static double hangClimbDegrees = 15.0;
-    public final static double collectionDegrees = 0.0;
+    public final static double collectionDegrees = 3.0;
 //    public final static double restingDegrees = 10.0;
 
     private OpMode opMode;
@@ -154,8 +154,14 @@ public class Arm {
         armRotationLeft.setTargetPosition(target);
         armRotationRight.setTargetPosition(target);
 
-        armRotationLeft.setPower(0.9);
-        armRotationRight.setPower(0.9);
+        if (rotationAngle < 5){
+            armRotationLeft.setPower(0.5);
+            armRotationRight.setPower(0.5);
+        }
+        else {
+            armRotationLeft.setPower(0.9);
+            armRotationRight.setPower(0.9);
+        }
 
         armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -214,6 +220,36 @@ public class Arm {
         return new Action() {
             private boolean initialized = false;
             private int target = (int) (Arm.collectionDegrees * encoderTicksPerDegrees);
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    armRotationLeft.setTargetPosition(target);
+                    armRotationRight.setTargetPosition(target);
+
+                    armRotationLeft.setPower(0.7);
+                    armRotationRight.setPower(0.7);
+
+                    armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    initialized = true;
+                }
+                if (armRotationLeft.getCurrentPosition() < target) {
+                    packet.put("armposition", armRotationLeft.getCurrentPosition());
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        };
+    }
+
+    //special action for auto
+    public Action moveArmToCollectSpecimenDegrees() {
+        return new Action() {
+            private boolean initialized = false;
+            private int target = (int) (15 * encoderTicksPerDegrees);
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {

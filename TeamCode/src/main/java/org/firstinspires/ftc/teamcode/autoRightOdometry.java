@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
@@ -99,9 +100,24 @@ public class autoRightOdometry extends LinearOpMode {
                         hangSecondSpec,
                         //fullMovementTest
                         arm.moveArmToBucketDegrees(),
-                        arm.scoreSpecimenViperslides()
+                        arm.scoreSpecimenViperslides(),
+                        intake.openClaw(),
+                        arm.retractViperslides(),
+                        arm.moveArmToCollectSpecimenDegrees(),
+                        collect3rdSpec,
+                        intake.closeClaw(),
+                        new ParallelAction(
+                                hang3rdSpec,
+                                arm.moveArmToBucketDegrees()
+                        ),
+                        arm.scoreSpecimenViperslides(),
+                        intake.openClaw(),
+                        arm.retractViperslides(),
+                        arm.moveArmToCollectSpecimenDegrees(),
+                        park
+                )
 
-                ));
+        );
 
     }
 }
