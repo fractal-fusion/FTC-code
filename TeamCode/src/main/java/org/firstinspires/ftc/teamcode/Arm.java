@@ -62,7 +62,7 @@ public class Arm {
 
     //define preset positions of the arm.
     public final static double clearBarrierDegrees = 15.0;
-    public final static double scoreBucketDegrees = 75.0;
+    public final static double scoreDegrees = 72.0;
     public final static double hangExtendedDegrees = 110.0;
     public final static double hangClimbDegrees = 15.0;
     public final static double collectionDegrees = 0.0;
@@ -161,16 +161,33 @@ public class Arm {
         armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
+    //manual arm controls
+    public void controlArm(Gamepad gamepad) {
+        rotationIncrementTotalDegrees += rotationIncrementDegrees * (gamepad.left_trigger + -gamepad.right_trigger);
+        rotationIncrementTotalDegrees = clampDouble(rotationIncrementTotalDegrees, 0.0, 110.0);
+        int target = (int) (rotationIncrementTotalDegrees * encoderTicksPerDegrees);
+        armRotationLeft.setTargetPosition(target);
+        armRotationRight.setTargetPosition(target);
+
+        ((DcMotorEx) armRotationLeft).setVelocity(2100);
+        ((DcMotorEx) armRotationRight).setVelocity(2100);
+
+        armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        opMode.telemetry.addData("arm degrees: ", rotationAngle);
+        opMode.telemetry.addData("arm target: ", target);
+        opMode.telemetry.update();
+    }
+
     // -----------------------------ROADRUNNER ACTIONS ------------------------------------
     public Action moveArmToBucketDegrees() {
         return new Action() {
             private boolean initialized = false;
-
+            private int target = (int) (Arm.scoreDegrees * encoderTicksPerDegrees);
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    int target = (int) (Arm.scoreBucketDegrees * encoderTicksPerDegrees);
-
                     armRotationLeft.setTargetPosition(target);
                     armRotationRight.setTargetPosition(target);
 
@@ -182,7 +199,7 @@ public class Arm {
 
                     initialized = true;
                 }
-                if (armRotationLeft.getCurrentPosition() < 2076) {
+                if (armRotationLeft.getCurrentPosition() < target) {
                     packet.put("armposition", armRotationLeft.getCurrentPosition());
                     return true;
                 }
@@ -196,12 +213,10 @@ public class Arm {
     public Action moveArmToCollectionDegrees() {
         return new Action() {
             private boolean initialized = false;
-
+            private int target = (int) (Arm.collectionDegrees * encoderTicksPerDegrees);
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    int target = (int) (Arm.collectionDegrees * encoderTicksPerDegrees);
-
                     armRotationLeft.setTargetPosition(target);
                     armRotationRight.setTargetPosition(target);
 
@@ -213,7 +228,7 @@ public class Arm {
 
                     initialized = true;
                 }
-                if (armRotationLeft.getCurrentPosition() < 110) {
+                if (armRotationLeft.getCurrentPosition() < target) {
                     packet.put("armposition", armRotationLeft.getCurrentPosition());
                     return true;
                 }
@@ -227,12 +242,10 @@ public class Arm {
     public Action extendViperslides() {
         return new Action() {
             private boolean initialized = false;
-
+            private int target = (int) (viperslideMaxInches * encoderTicksPerInches);
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    int target = (int) (viperslideMaxInches * encoderTicksPerInches);
-
                     viperslideLeft.setTargetPosition(target);
                     viperslideRight.setTargetPosition(target);
 
@@ -244,7 +257,7 @@ public class Arm {
 
                     initialized = true;
                 }
-                if (viperslideLeft.getCurrentPosition() < 4263) {
+                if (viperslideLeft.getCurrentPosition() < target) {
                     packet.put("viperslidepos", viperslideLeft.getCurrentPosition());
                     return true;
                 }
@@ -258,12 +271,10 @@ public class Arm {
     public Action retractViperslides() {
         return new Action() {
             private boolean initialized = false;
-
+            int target = 0;
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    int target = 0;
-
                     viperslideLeft.setTargetPosition(target);
                     viperslideRight.setTargetPosition(target);
 
@@ -275,7 +286,7 @@ public class Arm {
 
                     initialized = true;
                 }
-                if (viperslideLeft.getCurrentPosition() > 0) {
+                if (viperslideLeft.getCurrentPosition() > target) {
                     packet.put("viperslidepos", viperslideLeft.getCurrentPosition());
                     return true;
                 }
@@ -307,25 +318,6 @@ public class Arm {
 //            }
 //        };
 //    }
-
-    //manual arm controls
-    public void controlArm(Gamepad gamepad) {
-        rotationIncrementTotalDegrees += rotationIncrementDegrees * (gamepad.left_trigger + -gamepad.right_trigger);
-        rotationIncrementTotalDegrees = clampDouble(rotationIncrementTotalDegrees, 0.0, 110.0);
-        int target = (int) (rotationIncrementTotalDegrees * encoderTicksPerDegrees);
-        armRotationLeft.setTargetPosition(target);
-        armRotationRight.setTargetPosition(target);
-
-        ((DcMotorEx) armRotationLeft).setVelocity(2100);
-        ((DcMotorEx) armRotationRight).setVelocity(2100);
-
-        armRotationLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        armRotationRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        opMode.telemetry.addData("arm degrees: ", rotationAngle);
-        opMode.telemetry.addData("arm target: ", target);
-        opMode.telemetry.update();
-    }
 
 //    public void controlArm(Gamepad gamepad) {
 //
