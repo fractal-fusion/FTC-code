@@ -60,6 +60,22 @@ public class autoRightOdometry extends LinearOpMode {
                 //move to rightmost sample
                 .strafeTo(new Vector2d(-48.2,-36.5))
                 .build();
+        Action fullMovementTest = drive.actionBuilder(initialPose)
+                .strafeTo(new Vector2d(5,-34))
+                //  .strafeTo(new Vector2d(-))
+                .strafeTo(new Vector2d(37,-34))
+                .strafeToLinearHeading(new Vector2d(40, 0), Math.toRadians(0))
+                .strafeTo(new Vector2d(45,-50))
+                // .lineToXLinearHeading(-10,Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(47.5, 0),Math.toRadians(270))
+                .strafeToLinearHeading(new Vector2d(55,-50),Math.toRadians(270))
+                .strafeToConstantHeading(new Vector2d(40,-48))
+                .strafeTo(new Vector2d(40,-54))
+                .splineTo(new Vector2d(4,-34),Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(34,-60),Math.toRadians(-45))
+                .strafeToLinearHeading(new Vector2d(6,-34), Math.toRadians(90))
+                .strafeTo(new Vector2d(36,-60))
+                .build();
 
         //pickup a sample
         Actions.runBlocking(
@@ -80,7 +96,11 @@ public class autoRightOdometry extends LinearOpMode {
                         intake.openClaw(),
                         grab2ndSpec,
                         intake.openClaw(),
-                        hangSecondSpec
+                        hangSecondSpec,
+                        //fullMovementTest
+                        arm.moveArmToBucketDegrees(),
+                        arm.scoreSpecimenViperslides()
+
                 ));
 
     }

@@ -61,7 +61,7 @@ public class Arm {
                                                 / (pulleyDiameterInches * Math.PI);
 
     //define preset positions of the arm.
-    public final static double clearBarrierDegrees = 15.0;
+    public final static double clearBarrierDegrees = 13.0;
     public final static double scoreDegrees = 72.0;
     public final static double hangExtendedDegrees = 110.0;
     public final static double hangClimbDegrees = 15.0;
@@ -103,7 +103,7 @@ public class Arm {
 //        viperslideMaxInches = 42/Math.cos(rotationAngle);
 
         //restrict the horizontal extension
-        if (rotationAngle < 75) {
+        if (rotationAngle < Arm.scoreDegrees) {
             viperslideMaxInches = 15.0;
         }
         else {
@@ -243,6 +243,35 @@ public class Arm {
         return new Action() {
             private boolean initialized = false;
             private int target = (int) (viperslideMaxInches * encoderTicksPerInches);
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    viperslideLeft.setTargetPosition(target);
+                    viperslideRight.setTargetPosition(target);
+
+                    viperslideLeft.setPower(1);
+                    viperslideRight.setPower(1);
+
+                    viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    initialized = true;
+                }
+                if (viperslideLeft.getCurrentPosition() < target) {
+                    packet.put("viperslidepos", viperslideLeft.getCurrentPosition());
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        };
+    }
+
+    public Action scoreSpecimenViperslides() {
+        return new Action() {
+            private boolean initialized = false;
+            private int target = (int) (15 * encoderTicksPerInches);
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
