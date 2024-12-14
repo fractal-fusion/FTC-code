@@ -23,7 +23,7 @@ public class autoRightMacro extends LinearOpMode {
         //move arm to correct degrees
         arm.moveArm(Arm.scoreDegrees);
         sleep(1000);
-        arm.moveViperslides(12);
+        arm.moveViperslides(10);
         sleep(1000);
 
         //move to the chamber
@@ -31,12 +31,12 @@ public class autoRightMacro extends LinearOpMode {
         drivetrain.frontRight.setPower(1);
         drivetrain.backLeft.setPower(1);
         drivetrain.backRight.setPower(1);
-        sleep(250);
+        sleep(300);
         drivetrain.frontLeft.setPower(0);
         drivetrain.frontRight.setPower(0);
         drivetrain.backLeft.setPower(0);
         drivetrain.backRight.setPower(0);
-        sleep(100);
+        sleep(500);
 
         //extend viperslide and score specimen
         arm.moveViperslides(15);

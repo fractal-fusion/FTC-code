@@ -26,7 +26,7 @@ public class autoLeftMacro extends LinearOpMode {
         drivetrain.frontRight.setPower(1);
         drivetrain.backLeft.setPower(1);
         drivetrain.backRight.setPower(1);
-        sleep(145);
+        sleep(135);
         drivetrain.frontLeft.setPower(0);
         drivetrain.frontRight.setPower(0);
         drivetrain.backLeft.setPower(0);
@@ -72,9 +72,19 @@ public class autoLeftMacro extends LinearOpMode {
         sleep(3000);
         intake.mode(Intake.open);
         sleep(1000);
+        //move backward away from bucket
+        drivetrain.frontLeft.setPower(-0.5);
+        drivetrain.frontRight.setPower(-0.5);
+        drivetrain.backLeft.setPower(-0.5);
+        drivetrain.backRight.setPower(-0.5);
+        sleep(40);
+        drivetrain.frontLeft.setPower(0);
+        drivetrain.frontRight.setPower(0);
+        drivetrain.backLeft.setPower(0);
+        drivetrain.backRight.setPower(0);
         //de-extend slides
         arm.moveViperslides(0);
-        sleep(2000);
+        sleep(5000);
         //rotate right
         drivetrain.frontLeft.setPower(0.8);
         drivetrain.frontRight.setPower(-0.8);
@@ -97,7 +107,7 @@ public class autoLeftMacro extends LinearOpMode {
         drivetrain.backRight.setPower(0);
         sleep(30);
         arm.moveArm(Arm.collectionDegrees);
-        sleep(1000);
+        sleep(5000);
 //        //go forward towards sample
 //        drivetrain.frontLeft.setPower(1);
 //        drivetrain.frontRight.setPower(1);
