@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Right Side Auto Macro", group="Robot")
+@Autonomous(name="Right Side Specimen Auto Macro", group="Robot")
 public class autoRightMacro extends LinearOpMode {
 
     @Override
@@ -22,6 +22,9 @@ public class autoRightMacro extends LinearOpMode {
 
         //move arm to correct degrees
         arm.moveArm(Arm.scoreDegrees);
+        sleep(1000);
+        arm.moveViperslides(12);
+        sleep(1000);
 
         //move to the chamber
         drivetrain.frontLeft.setPower(1);
@@ -43,10 +46,10 @@ public class autoRightMacro extends LinearOpMode {
 
         //park in the scoring zone
         //move backwards out
-        drivetrain.frontLeft.setPower(1);
-        drivetrain.frontRight.setPower(1);
-        drivetrain.backLeft.setPower(1);
-        drivetrain.backRight.setPower(1);
+        drivetrain.frontLeft.setPower(-1);
+        drivetrain.frontRight.setPower(-1);
+        drivetrain.backLeft.setPower(-1);
+        drivetrain.backRight.setPower(-1);
         sleep(250);
         drivetrain.frontLeft.setPower(0);
         drivetrain.frontRight.setPower(0);
@@ -55,6 +58,8 @@ public class autoRightMacro extends LinearOpMode {
         sleep(20);
 
         //move arm down
+        arm.moveViperslides(0);
+        sleep(1000);
         arm.moveArm(Arm.collectionDegrees);
         sleep(1000);
 
@@ -63,7 +68,7 @@ public class autoRightMacro extends LinearOpMode {
         drivetrain.frontRight.setPower(-1);
         drivetrain.backLeft.setPower(-1);
         drivetrain.backRight.setPower(1);
-        sleep(350);
+        sleep(400);
         drivetrain.frontLeft.setPower(0);
         drivetrain.frontRight.setPower(0);
         drivetrain.backLeft.setPower(0);

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Left Side Auto Macro", group="Robot")
+@Autonomous(name="Left Side Sample Auto Macro", group="Robot")
 public class autoLeftMacro extends LinearOpMode {
 
     @Override
@@ -96,6 +96,8 @@ public class autoLeftMacro extends LinearOpMode {
         drivetrain.backLeft.setPower(0);
         drivetrain.backRight.setPower(0);
         sleep(30);
+        arm.moveArm(Arm.collectionDegrees);
+        sleep(1000);
 //        //go forward towards sample
 //        drivetrain.frontLeft.setPower(1);
 //        drivetrain.frontRight.setPower(1);
