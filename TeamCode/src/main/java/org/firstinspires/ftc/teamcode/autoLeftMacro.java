@@ -68,7 +68,7 @@ public class autoLeftMacro extends LinearOpMode {
         arm.moveArm(Arm.scoreDegrees);
         sleep(2000);
         //extend slides
-        arm.moveViperslides(34);
+        arm.moveViperslides(35);
         sleep(3000);
         intake.mode(Intake.open);
         sleep(1000);
