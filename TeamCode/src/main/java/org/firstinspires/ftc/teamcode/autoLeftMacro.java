@@ -15,10 +15,10 @@ public class autoLeftMacro extends LinearOpMode {
         waitForStart();
 
         //grab sample
-        //intake.mode(Intake.close);
-        //sleep(1500);
+        intake.mode(Intake.close);
+        sleep(100);
         arm.moveArm(Arm.collectionDegrees);
-        sleep(2000);
+        sleep(1000);
 
         //move to the bucket (tested)
         //forward
@@ -59,7 +59,7 @@ public class autoLeftMacro extends LinearOpMode {
         drivetrain.frontRight.setPower(0.5);
         drivetrain.backLeft.setPower(0.5);
         drivetrain.backRight.setPower(0.5);
-        sleep(35);
+        sleep(70);
         drivetrain.frontLeft.setPower(0);
         drivetrain.frontRight.setPower(0);
         drivetrain.backLeft.setPower(0);
@@ -70,8 +70,8 @@ public class autoLeftMacro extends LinearOpMode {
         //extend slides
         arm.moveViperslides(34);
         sleep(3000);
-        //intake.mode(Intake.open);
-        //sleep(1000);
+        intake.mode(Intake.open);
+        sleep(1000);
         //de-extend slides
         arm.moveViperslides(0);
         sleep(2000);
@@ -96,64 +96,38 @@ public class autoLeftMacro extends LinearOpMode {
         drivetrain.backLeft.setPower(0);
         drivetrain.backRight.setPower(0);
         sleep(30);
-        //go forward towards sample
-        drivetrain.frontLeft.setPower(1);
-        drivetrain.frontRight.setPower(1);
-        drivetrain.backLeft.setPower(1);
-        drivetrain.backRight.setPower(1);
-        sleep(200);
-        drivetrain.frontLeft.setPower(0);
-        drivetrain.frontRight.setPower(0);
-        drivetrain.backLeft.setPower(0);
-        drivetrain.backRight.setPower(0);
-        sleep(20);
-        //untested
-        arm.moveArm(Arm.collectionDegrees);
-        sleep(2000);
-        drivetrain.frontLeft.setPower(-0.8);
-        drivetrain.frontRight.setPower(0.8);
-        drivetrain.backLeft.setPower(-0.8);
-        drivetrain.backRight.setPower(0.8);
-        sleep(200);
-        drivetrain.frontLeft.setPower(0);
-        drivetrain.frontRight.setPower(0);
-        drivetrain.backLeft.setPower(0);
-        drivetrain.backRight.setPower(0);
-        sleep(10);
-
-
-
-
-////        sleep(6000);
-////        arm.moveArm(15);
-////        sleep(2000);
-
-
-
-        //pick up the rightmost sample from drive team perspective(untested)
+//        //go forward towards sample
 //        drivetrain.frontLeft.setPower(1);
-//        drivetrain.frontRight.setPower(-1);
+//        drivetrain.frontRight.setPower(1);
 //        drivetrain.backLeft.setPower(1);
-//        drivetrain.backRight.setPower(-1);
-//        sleep(120);
-//        drivetrain.frontLeft.setPower(0);
-//        drivetrain.frontRight.setPower(0);
-//        drivetrain.backLeft.setPower(0);
-//        drivetrain.backRight.setPower(0);
-//        sleep(10);
-//        drivetrain.frontLeft.setPower(1);
-//        drivetrain.frontRight.setPower(-1);
-//        drivetrain.backLeft.setPower(-1);
 //        drivetrain.backRight.setPower(1);
-//        sleep(80);
+//        sleep(200);
+//        drivetrain.frontLeft.setPower(0);
+//        drivetrain.frontRight.setPower(0);
+//        drivetrain.backLeft.setPower(0);
+//        drivetrain.backRight.setPower(0);
+//        sleep(20);
+//        //untested drive to submersible
+//        arm.moveArm(Arm.collectionDegrees);
+//        sleep(2000);
+//        drivetrain.frontLeft.setPower(-0.8);
+//        drivetrain.frontRight.setPower(0.8);
+//        drivetrain.backLeft.setPower(-0.8);
+//        drivetrain.backRight.setPower(0.8);
+//        sleep(200);
 //        drivetrain.frontLeft.setPower(0);
 //        drivetrain.frontRight.setPower(0);
 //        drivetrain.backLeft.setPower(0);
 //        drivetrain.backRight.setPower(0);
 //        sleep(10);
-//        arm.moveArm(4);
-//        sleep(500);
-//        intake.mode(Intake.close);
+
+
+
+
+
+
+
+
 
     }
 };
