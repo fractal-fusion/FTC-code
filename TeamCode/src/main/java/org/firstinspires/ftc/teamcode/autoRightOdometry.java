@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Disabled
+
 @Autonomous(name="Right Side Auto", group="Robot")
 public class autoRightOdometry extends LinearOpMode {
 
