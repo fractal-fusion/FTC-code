@@ -44,6 +44,7 @@ public class productionOpmode extends LinearOpMode {
             }
             else if (gamepad2.left_bumper) {
                 arm.moveArm(Arm.clearBarrierDegrees);
+                intake.setHorizontalPos();
             }
             else if (gamepad2.y) {
                 arm.moveArm(Arm.scoreDegrees);

@@ -39,7 +39,7 @@ public class Arm {
 
     //the amount of inches or degrees to increment on each run of the opmode loop
     private final double viperslideIncrementInches = 0.1;
-    private final double rotationIncrementDegrees = 0.5;
+    private final double rotationIncrementDegrees = 1.5;
 
     //Subtracted from the max inches of the viperslide to limit its extension
     private final double viperLimit = 5.0;
@@ -50,9 +50,6 @@ public class Arm {
 
     //rotation angle variable
     private double rotationAngle;
-
-//    private final double rotationIncrementDegrees = 0.5;
-//    double rotationIncrementTotalDegrees = 0.0;
 
     //calculate conversion factors
     private final double encoderTicksPerDegrees = (rotationEncoderPulsesPerRevolution * rotationGearReduction)
