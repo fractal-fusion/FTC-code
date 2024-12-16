@@ -249,7 +249,8 @@ public class Arm {
     public Action moveArmToCollectSpecimenDegrees() {
         return new Action() {
             private boolean initialized = false;
-            private int target = (int) (15 * encoderTicksPerDegrees);
+            //five degrees allows for collection of the specimen from the ground
+            private int target = (int) (5 * encoderTicksPerDegrees);
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
@@ -304,9 +305,39 @@ public class Arm {
         };
     }
 
+    public Action retractViperslides() {
+        return new Action() {
+            private boolean initialized = false;
+            int target = 0;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    viperslideLeft.setTargetPosition(target);
+                    viperslideRight.setTargetPosition(target);
+
+                    viperslideLeft.setPower(1);
+                    viperslideRight.setPower(1);
+
+                    viperslideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    viperslideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    initialized = true;
+                }
+                if (viperslideLeft.getCurrentPosition() > target) {
+                    packet.put("viperslidepos", viperslideLeft.getCurrentPosition());
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        };
+    }
+
     public Action scoreSpecimenViperslides() {
         return new Action() {
             private boolean initialized = false;
+            //extend 15 inches to score the specimen on the high rung
             private int target = (int) (15 * encoderTicksPerInches);
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
@@ -333,10 +364,11 @@ public class Arm {
         };
     }
 
-    public Action retractViperslides() {
+    public Action primeScoreSpecimenViperslides() {
         return new Action() {
             private boolean initialized = false;
-            int target = 0;
+            //11 inches to touch the high rung but not score the specimen
+            private int target = (int) (11 * encoderTicksPerInches);
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
@@ -351,7 +383,7 @@ public class Arm {
 
                     initialized = true;
                 }
-                if (viperslideLeft.getCurrentPosition() > target) {
+                if (viperslideLeft.getCurrentPosition() < target) {
                     packet.put("viperslidepos", viperslideLeft.getCurrentPosition());
                     return true;
                 }
